@@ -1,0 +1,145 @@
+/* HEADER */
+header {
+  position: fixed;
+  top: 0;
+  z-index: 100;
+  background: #0a0a0fcc;
+  backdrop-filter: blur(20px);
+  border-bottom: var(--border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  height: 64px;
+}
+
+
+.logo {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 900;
+  font-size: 1.2rem;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+  cursor: pointer;
+  width: auto;
+  height: auto;
+  align-items: start;
+  
+  
+  span {
+    font-weight: 300;
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    display: block;
+    background: none;
+    -webkit-text-fill-color: var(--muted);
+  }
+}
+
+
+/*пошук*/
+.search-wrap {
+  flex: 1;
+  max-width: 560px;
+  width: auto;
+  height: auto;
+  
+  
+  input {
+    width: 100%;
+    background: var(--card);
+    border: var(--border);
+    border-radius: 12px;
+    padding: 0 1rem 0 2.8rem;
+    height: 40px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    
+    
+    &:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--glow);
+    }
+  }
+  
+  &::before {
+    content: '⌕';
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 1.1rem;
+    pointer-events: none;
+  }
+}
+
+
+.nav-panel {
+  display: flex;
+  gap: 0.25rem;
+  margin-left: auto;
+  flex-shrink: 1;
+}
+
+
+.tab-btn {
+  background: none;
+  color: var(--muted);
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.9rem;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+  flex-shrink: 1;
+  
+  
+  &.active, &:hover {
+    color: var(--text);
+    background: var(--border);
+  }
+  
+  &.active {
+    color: var(--accent);
+  }
+}
+
+
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  header { 
+    padding: 0 1rem; 
+    gap: 1rem; 
+  }
+  
+  .modal__header { 
+    flex-direction: column; 
+  }
+  
+  .modal__poster { 
+    width: 100%; 
+    max-width: 200px; 
+    margin: 0 auto; 
+  }
+  
+  .nav-panel { 
+    display: none; 
+  }
+}
+
+
+@media (orientation: landscape) {
+  /*.anime-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }*/
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AniMe — дивитись аніме</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Noto+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  
+  
+  <script src="hпппttps://cdnjs.cloudflare.com/ajax/libs/hls.js/1.4.12/hls.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<!--
+<link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
+<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
+-->
+  
+  
+  <!--style-->
+  <link rel="stylesheet" href="css/light-theme.css">
+  <link rel="stylesheet" href="css/dark-theme.css">
+  
+  <link rel="stylesheet" href="css/main-style.css">
+  <link rel="stylesheet" href="css/main-banner.css">
+  <link rel="stylesheet" href="css/menu.css">
+  <link rel="stylesheet" href="css/root.css">
+  
+  <!--page-->
+  <link rel="stylesheet" href="css/page/main.css">
+  <link rel="stylesheet" href="css/page/anime-viewing.css">
+  
+  
+</head>
+<body>
+
+<header>
+  <div class="logo" onclick="goHome()">
+    AniMe
+    <!--<span>дивитись аніме</span>-->
+  </div>
+
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Пошук аніме..." autocomplete="off" />
+  </div>
+
+  <nav class="nav-panel">
+    <button class="tab-btn active" onclick="switchTab('updates', this)">Новинки</button>
+    <!--<button class="tab-btn" onclick="switchTab('scheduleNow', this)">Теперішній розклад</button>
+    <button class="tab-btn" onclick="switchTab('scheduleWeek', this)">Недільний розклад</button>-->
+    <button class="tab-btn" onclick="switchTab('random', this)">Випадкові жанри</button>
+  </nav>
+  
+  <!--menu -->
+  <button class="menu-btn" id="menu-btn">
+    <span class="menu-btn__line line-1"></span>
+    <span class="menu-btn__line line-2"></span>
+    <span class="menu-btn__line line-3"></span>
+  </button>
+  
+</header>
+
+
+<!--root-->
+<main class="root">
+  <!--menu navigation-->
+  <nav class="menu" id="menu">
+    <button class="menu__btn active" data-filter="updates">Новинки</button>
+    <button class="menu__btn" data-filter="random">Випадкові жанри</button>
+    
+    <details>
+      <summary class="menu__btn" data-filter-list="scheduleNow">Теперішній розклад</summary>
+      <div class="">
+        <button class="menu__btn" data-filter="yesterday">Вчора</button>
+        <button class="menu__btn" data-filter="today">Сьогодні</button>
+        <button class="menu__btn" data-filter="tomorrow">Завтра</button>
+      </div>
+    </details>
+    
+    <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
+  </nav>
+  
+  
+  <!--render anime list-->
+  <div id="main-page" class="main-page">
+    <div id="errorBox" class="error-msg" style="display:none;"></div>
+    <h2 class="section-title" id="sectionTitle">Свіжі <em>оновленя</em></h2>
+    
+    <div class="loader" id="loader">
+      <div class="spinner"></div>
+      Завантаження...
+    </div>
+  </div>
+  
+  
+  <!--anime viewing -->
+  <div class="anime-viewing" id="anime-viewing">
+    
+    <div class="anime-view__header">
+      <div class="anime-view__poster">
+        <img class="anime-view__poster-img" id="anime-poster-img" src="" alt="" />
+      </div>
+      <div class="anime-view__info">
+        <div class="info__title" id="title"></div>
+        <div class="info__title-en" id="title-en"></div>
+        <div class="info__badges" id="badges"></div>
+        <div class="info__desc" id="description"></div>
+      </div>
+    </div>
+    
+    <div class="anime-view__body">
+      
+      <div class="player-section">
+        <div class="player-label">▶ Плеєр</div>
+        <div class="video-container">
+          <video class="video-player" id="video-player" controls></video>
+          <!--<iframe class="video-player" id="video-player" src="" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+          -->
+        </div>
+        <div class="quality-row">
+          <span>Якість:</span>
+          <button class="quality-btn" data-quality="1080">1080p</button>
+          <button class="quality-btn" data-quality="720">720p</button>
+          <button class="quality-btn active" data-quality="480">480p</button>
+        </div>
+      </div>
+      
+      <div class="episodes-wrap">
+        <div class="player-label">Епізоди</div>
+        <div class="episodes-grid" id="episodesGrid"></div>
+      </div>
+      
+    </div>
+  </div>
+  
+</main>
+
+
+
+<!--data-->
+<script src="js/data/config.js"></script>
+
+
+<!--logic-->
+<script src="js/logic/mainLogic.js"></script>
+<script src="js/logic/menu.js"></script>
+<script src="js/logic/searchAnime.js"></script>
+<script src="js/logic/renderAnimeLists.js"></script>
+<script src="js/logic/filterAnime.js"></script>
+
+<!--page logic-->
+<script src="js/logic/page/main.js"></script>
+<script src="js/logic/page/animeViewing.js"></script>
+
+</body>
+</html>
