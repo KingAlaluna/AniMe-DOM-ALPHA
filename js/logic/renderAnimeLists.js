@@ -64,11 +64,6 @@ async function renderGenresGrid(list) {
     card.className = 'anime-card';
     card.style.animationDelay = `${idx * 0.03}s`;
     
-    card.onclick = () => {
-      html.animeViewing.style.display = 'flex';
-      html.mainPage.style.display = 'none';
-      openTitle(a);
-    };
     
     const poster = `${api.imgApi + a.image.optimized.preview}`;
     const name = a.name;
