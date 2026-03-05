@@ -22,7 +22,7 @@ const html = {
   menu: i('menu'),
   loader: i('loader'),
   
-  epBtn: c('ep-btn'),
+  episodeBtn: c('episode-btn'),
   qualityBtn: c('quality-btn'),
   tabBtn: c('tab-btn'),
   menuBtnLine: c('menu-btn__line'),
