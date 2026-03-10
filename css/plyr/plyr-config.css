@@ -1,0 +1,28 @@
+.plyr, .plyr * {
+  width: auto;
+  height: auto;
+  display: block;
+  overflow: visible;
+  flex-direction: initial;
+  justify-content: initial;
+  align-items: initial;
+  /*fill: var(--accent2);*/
+  /*stroke: var(--accent2);*/
+  color: revert;
+  flex-shrink: initial;
+}
+
+.plyr {
+  width: 100%;
+  height: 100%;
+}
+
+#sprite-plyr, #sprite-plyr * {
+  width: auto;
+  height: auto;
+  display: none;
+  overflow: visible;
+  /*background-color: var(--accent2);
+  fill: var(--accent2);
+  stroke: var(--accent2);*/
+}

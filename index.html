@@ -7,15 +7,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Noto+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
   
-  
-  <script src="hпппttps://cdnjs.cloudflare.com/ajax/libs/hls.js/1.4.12/hls.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-<!--
-<link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-<script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
--->
-  
-  
   <!--style-->
   <link rel="stylesheet" href="css/light-theme.css">
   <link rel="stylesheet" href="css/dark-theme.css">
@@ -29,6 +20,10 @@
   <link rel="stylesheet" href="css/page/main.css">
   <link rel="stylesheet" href="css/page/anime-viewing.css">
   
+  <!--plyr-->
+  <link rel="stylesheet" href="css/plyr/plyr-config.css">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
+  <link rel="stylesheet" href="css/plyr/plyr-custom.css">
   
 </head>
 <body>
@@ -112,15 +107,7 @@
       <div class="player-section">
         <div class="player-label">▶ Плеєр</div>
         <div class="video-container">
-          <video class="video-player" id="video-player" controls></video>
-          <!--<iframe class="video-player" id="video-player" src="" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
-          -->
-        </div>
-        <div class="quality-row">
-          <span>Якість:</span>
-          <button class="quality-btn" data-quality="1080">1080p</button>
-          <button class="quality-btn" data-quality="720">720p</button>
-          <button class="quality-btn active" data-quality="480">480p</button>
+          <video class="video-player" id="video-player" ></video>
         </div>
       </div>
       
@@ -135,21 +122,26 @@
 </main>
 
 
+<!--libraries-->
+<script defer src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script defer src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+
 
 <!--data-->
-<script src="js/data/config.js"></script>
+<script defer src="js/data/config.js"></script>
 
 
 <!--logic-->
-<script src="js/logic/mainLogic.js"></script>
-<script src="js/logic/menu.js"></script>
-<script src="js/logic/searchAnime.js"></script>
-<script src="js/logic/renderAnimeLists.js"></script>
-<script src="js/logic/filterAnime.js"></script>
+<script defer src="js/logic/mainLogic.js"></script>
+<script defer src="js/logic/menu.js"></script>
+<script defer src="js/logic/searchAnime.js"></script>
+<script defer src="js/logic/renderAnimeLists.js"></script>
+<script defer src="js/logic/filterAnime.js"></script>
 
 <!--page logic-->
-<script src="js/logic/page/main.js"></script>
-<script src="js/logic/page/animeViewing.js"></script>
+<script defer src="js/logic/page/main.js"></script>
+<script defer src="js/logic/page/animeViewing.js"></script>
 
 </body>
 </html>
+

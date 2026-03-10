@@ -1,5 +1,5 @@
 async function openTitle(anime) {
-  console.log('клік по аніме', anime);
+  //console.log('клік по аніме', anime);
   
   html.episodesGrid.innerHTML = '<div class="loader"><div class="spinner"></div></div>';
   
@@ -15,13 +15,13 @@ async function openTitle(anime) {
     videoQuality(eps);
     videoEpisode(eps);
     
-    console.log('Загальні Дані епізодів:', epsJson);
+    /*console.log('Загальні Дані епізодів:', epsJson);
     console.log('Дані епізодів:', eps);
     
     eps.forEach(e => {
       console.log('2 Дані епізода:', e);
     });
-    
+    */
     
     
     // poster
@@ -84,17 +84,17 @@ loadTab('updates');
 //video quality
 //
 function videoQuality(url) {
-  html.qualityBtn.forEach(e => {
-    e.addEventListener('click', () => {
-      html.qualityBtn.forEach(e => {
-        e.classList.remove('active');
-      });
-      e.classList.add('active');
-      
-      const quality = e.dataset.quality;
-      vData.quality = quality;
-      playEpisode(url);
-    });
+  //plyr player
+  const player = new Plyr(html.videoPlayer, {
+    quality: {
+      default: 480,
+      options: [1080, 720, 480],
+      forced: true,
+      onChange: (newQuality) => {
+        vData.quality = newQuality;
+        playEpisode(url);
+      },
+    }
   });
 }
 
@@ -121,7 +121,6 @@ function playEpisode(ep) {
 }
 
 
-
 //
 //episode
 //
@@ -141,7 +140,7 @@ function videoEpisode(url) {
       });
       
       e.classList.add('active');
-      console.log('клік на епізод');
+      //console.log('клік на епізод');
       
       const episode = e.dataset.episode;
       vData.episode = episode;
@@ -149,4 +148,5 @@ function videoEpisode(url) {
     });
   });
 }
+
 

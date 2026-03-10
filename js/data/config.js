@@ -23,7 +23,6 @@ const html = {
   loader: i('loader'),
   
   episodeBtn: c('episode-btn'),
-  qualityBtn: c('quality-btn'),
   tabBtn: c('tab-btn'),
   menuBtnLine: c('menu-btn__line'),
   cMenuBtn: c('menu__btn'),

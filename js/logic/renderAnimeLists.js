@@ -9,7 +9,7 @@ async function renderGrid(list) {
   grid.className = 'anime-grid';
   
   list.forEach((a, idx) => {
-    console.log('Ответ сервера:', a);
+    //console.log('Ответ сервера:', a);
     
     const card = document.createElement('div');
     card.className = 'anime-card';
@@ -58,7 +58,7 @@ async function renderGenresGrid(list) {
   grid.className = 'anime-grid';
   
   list.forEach((a, idx) => {
-    console.log('Відповідь сервера:', a);
+    //console.log('Відповідь сервера:', a);
     
     const card = document.createElement('div');
     card.className = 'anime-card';
@@ -101,7 +101,7 @@ async function renderReleaseGrid(list) {
   grid.className = 'anime-grid';
   
   list.forEach((a, idx) => {
-    console.log('Ответ сервера:', a);
+    //console.log('Ответ сервера:', a);
     
     const card = document.createElement('div');
     card.className = 'anime-card';
