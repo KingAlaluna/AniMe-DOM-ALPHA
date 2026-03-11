@@ -1,5 +1,5 @@
 async function openTitle(anime) {
-  //console.log('клік по аніме', anime);
+  console.log('клік по аніме', anime);
   
   html.episodesGrid.innerHTML = '<div class="loader"><div class="spinner"></div></div>';
   
@@ -22,6 +22,7 @@ async function openTitle(anime) {
       console.log('2 Дані епізода:', e);
     });
     */
+    console.log(a)
     
     
     // poster
@@ -31,20 +32,28 @@ async function openTitle(anime) {
     html.modalTitle.textContent = a.name.main;
     
     // badges
-    const badges = [];
-    badges.push(a.year);
-    if (title.status?.string) badges.push(title.status.string);
-    if (title.type?.string) badges.push(title.type.string);
-    (title.genres || []).slice(0, 3).forEach(g => badges.push(g));
+    const year = a.year;
+    const rating = a.age_rating.label;
+    const type = a.type.description;
+    const episode = a.episodes_total ? a.episodes_total : a.latest_episode.ordinal;
+    const genres = anime.genres?.map(e => e.name).join(', ');
     
-    html.modalBadges.innerHTML = badges
-      .map(b => `<span class="badge">${escHtml(b)}</span>`).join('');
+    console.log(genres);
+    html.modalBadges.innerHTML = `
+      ${year ? `<span class="badge">${year}</span>` : ''}
+      ${rating ? `<span class="badge badge--accent">${rating}</span>` : ''}
+      ${type ? `<span class="badge badge--accent">${type}</span>` : ''}
+      ${episode ? `<span class="badge badge--accent">${episode} епізодів</span>` : ''}
+      ${genres ? `<span class="badge badge--accent">${genres}</span>` : ''}
+      
+    `;
     
-    html.modalDesc.textContent = a.description || '';
     
-    //if (eps.length > 0) playEpisode(eps[0]);
-  
-  
+    html.description.textContent = a.description || '';
+    html.description.addEventListener('click', () => {
+      html.description.classList.toggle('active');
+    });
+    
   } catch (e) {
     showError('Помилка завантаження тайтла: ' + e.message);
     console.log('Помилка завантаження тайтла: ' + e.message);
@@ -62,6 +71,7 @@ function closeModal(event) {
 function doClose() {
   html.animeViewing.style.display = 'none';
   html.mainPage.style.display = 'flex';
+  html.description.classList.remove('active');
   
   html.videoPlayer.pause();
   html.videoPlayer.src = '';

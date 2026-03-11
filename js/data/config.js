@@ -15,7 +15,7 @@ const html = {
   modalTitle: i('title'),
   modalPoster: i('anime-poster-img'),
   modalBadges: i('badges'),
-  modalDesc: i('description'),
+  description: i('description'),
   sectionTitle: i('sectionTitle'),
   errorBox: i('errorBox'),
   menuBtn: i('menu-btn'),

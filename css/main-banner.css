@@ -15,27 +15,21 @@ header {
 
 
 .logo {
-  font-family: 'Unbounded', sans-serif;
-  font-weight: 900;
-  font-size: 1.2rem;
-  letter-spacing: -0.03em;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  white-space: nowrap;
-  cursor: pointer;
+  /*cursor: pointer;*/
   width: auto;
   height: auto;
   align-items: start;
   
   
-  span {
-    font-weight: 300;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    display: block;
-    background: none;
-    -webkit-text-fill-color: var(--muted);
+  h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-weight: 900;
+    font-size: 1.2rem;
+    letter-spacing: -0.03em;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    white-space: nowrap;
   }
 }
 

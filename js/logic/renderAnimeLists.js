@@ -24,7 +24,10 @@ async function renderGrid(list) {
     const poster = `${api.imgApi + a.poster.optimized.src}`;
     const name = a.name.main;
     const year = a.year;
-    const eps = a.player;
+    const rating = a.age_rating.label;
+    const type = a.type.description;
+    const eps = a.episodes_total ? a.episodes_total : a.latest_episode.ordinal;
+    const genres = a.genres?.map(e => e.name).join(', ');
     
     card.innerHTML = `
       <img class="anime-card__poster" src="${poster}" alt="${escHtml(name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
@@ -33,7 +36,11 @@ async function renderGrid(list) {
         <div class="anime-card__title">${escHtml(name)}</div>
         <div class="anime-card__meta">
           ${year ? `<span class="badge">${year}</span>` : ''}
-          ${eps ? `<span class="badge badge--accent">${eps} эп.</span>` : ''}
+          ${rating ? `<span class="badge badge--accent">${rating}</span>` : ''}
+          ${type ? `<span class="badge badge--accent">${type}</span>` : ''}
+          ${eps ? `<span class="badge badge--accent">${eps} еп.</span>` : ''}
+          ${genres ? `<span class="badge badge--accent">${genres}</span>` : ''}
+          
         </div>
       </div>
     `;

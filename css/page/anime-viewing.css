@@ -2,7 +2,7 @@
   height: max-content;
   animation: fadeIn 0.2s ease;
   display: none;
-  background: var(--surface);
+  /*background: var(--surface);*/
   animation: scaleIn 0.25s ease;
   
   
@@ -40,8 +40,6 @@
 
 
 .anime-view__header {
-  position: relative;
-  display: flex;
   gap: 1.5rem;
   border-bottom: var(--border);
 }
@@ -80,21 +78,26 @@
   }
   
   .info__badges {
-    display: flex;
+    flex-direction: row;
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: 0.75rem;
   }
   
   .info__desc {
-    margin-top: 0.75rem;
+    margin: 0.75rem 0;
     font-size: 0.82rem;
     color: var(--muted);
     line-height: 1.65;
-    /*display: -webkit-box;
+    display: -webkit-box;
     -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;*/
+    -webkit-box-orient: vertical;
     overflow: hidden;
+    
+    
+    &.active {
+      display: block;
+    }
   }
 }
 
@@ -107,7 +110,7 @@
 
 /* VIDEO PLAYER */
 .player-section { 
-  margin-bottom: 1.5rem; 
+  margin: 1.5rem 0; 
 }
 
 .player-label {
