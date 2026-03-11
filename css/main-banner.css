@@ -1,5 +1,4 @@
-/* HEADER */
-header {
+.main-banner {
   position: fixed;
   top: 0;
   z-index: 100;
@@ -11,6 +10,7 @@ header {
   align-items: center;
   gap: 2rem;
   height: 64px;
+  width: 100%;
 }
 
 
@@ -77,33 +77,64 @@ header {
 
 .nav-panel {
   display: flex;
-  gap: 0.25rem;
-  margin-left: auto;
   flex-shrink: 1;
+  flex-direction: row;
 }
 
 
-.tab-btn {
-  background: none;
-  color: var(--muted);
-  font-family: 'Unbounded', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 400;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.5rem 0.9rem;
-  cursor: pointer;
-  transition: color 0.2s, background 0.2s;
-  flex-shrink: 1;
+.nav-panel__panel {
+  display: none;
+  flex-direction: row;
+  width: max-content;
+  gap: 1rem;
   
   
-  &.active, &:hover {
-    color: var(--text);
-    background: var(--border);
-  }
-  
-  &.active {
-    color: var(--accent);
+  .menu__btn {
+    background: none;
+    color: var(--muted);
+    font-family: 'Unbounded', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    height: 40px;
+    width: min-content;
+    padding: 0 0.5rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.2s, background 0.2s;
+    
+    
+    &.active, &:hover {
+      color: var(--text);
+      background: var(--border);
+    }
+    
+    &.active {
+      color: var(--accent);
+    }
+    
+    &.details {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      
+      &::before {
+        content: '';
+        width: auto;
+        height: 1rem;
+        aspect-ratio: 1/1;
+        margin: 0 0.5rem 0 0;
+        background: currentColor;
+        clip-path: polygon(0 0, 0% 100%, 100% 50%);
+        transition: 0.2s ease;
+      }
+      
+      &.active {
+        &::before {
+          clip-path: polygon(0 0, 100% 0%, 50% 100%);
+        }
+      }
+    }
   }
 }
 
@@ -111,23 +142,45 @@ header {
 
 /* RESPONSIVE */
 @media (max-width: 640px) {
-  header { 
+  .main-banner { 
     padding: 0 1rem; 
     gap: 1rem; 
   }
-  
-  .modal__header { 
-    flex-direction: column; 
+}
+
+
+@media (min-width: 720px) {
+  .nav-panel__panel {
+    &.panel-1 {
+      display: flex;
+    }
   }
-  
-  .modal__poster { 
-    width: 100%; 
-    max-width: 200px; 
-    margin: 0 auto; 
+}
+
+
+@media (min-width: 1200px) {
+  .nav-panel__panel {
+    &.panel-1 {
+      display: none;
+    }
+    &.panel-2 {
+      display: flex;
+    }
   }
-  
-  .nav-panel { 
-    display: none; 
+}
+
+
+@media (min-width: 1920px) {
+  .nav-panel__panel {
+    &.panel-1 {
+      display: none;
+    }
+    &.panel-2 {
+      display: none;
+    }
+    &.panel-3 {
+      display: flex;
+    }
   }
 }
 

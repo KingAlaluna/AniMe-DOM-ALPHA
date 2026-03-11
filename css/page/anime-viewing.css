@@ -42,6 +42,9 @@
 .anime-view__header {
   gap: 1.5rem;
   border-bottom: var(--border);
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
 }
 
 .anime-view__poster {
@@ -58,6 +61,7 @@
 
 .anime-view__info {
   flex: 1;
+  height: auto;
   
   
   .info__title {
@@ -210,4 +214,12 @@
   color: #ff8080;
   font-size: 0.85rem;
   margin-bottom: 1.5rem;
+}
+
+
+
+@media (orientation: landscape) {
+  .anime-view__header {
+    grid-template-columns: 1fr 1fr;
+  }
 }

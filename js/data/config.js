@@ -20,6 +20,8 @@ const html = {
   errorBox: i('errorBox'),
   menuBtn: i('menu-btn'),
   menu: i('menu'),
+  modalMenu: i('modal-menu'),
+  menuBtnDetails: i('menu-btn-details'),
   loader: i('loader'),
   
   episodeBtn: c('episode-btn'),

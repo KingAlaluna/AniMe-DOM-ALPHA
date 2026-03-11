@@ -1,3 +1,4 @@
+//main menu
 html.menuBtn.addEventListener('click', () => {
   html.menuBtnLine.forEach(e => {
     e.classList.toggle('active');
@@ -14,15 +15,25 @@ html.cMenuBtn.forEach(e => {
       data.btnFiltersActive = e;
     }
     
-    html.cMenuBtn.forEach(e => {
-      const data3 = e.dataset.filter;
-      if (data3 && data.btnFiltersActive != e) {
-        e.classList.remove('active');
-      }
-    });
-    
-    if (!e.classList.contains('active') || dataList) {
+    if (!dataList) {
+      html.cMenuBtn.forEach(e => {
+        const data3 = e.dataset.filter;
+        if (data3 && data.btnFiltersActive.dataset.filter != e.dataset.filter) {
+          e.classList.remove('active');
+        }
+      });
+    } else {
       e.classList.toggle('active');
+    }
+    
+    
+    if (!e.classList.contains('active') && !dataList) {
+      html.cMenuBtn.forEach(e => {
+        const data3 = e.dataset.filter;
+        if (data2 == data3) {
+          e.classList.toggle('active');
+        }
+      });
     }
     
     if (data2) {
@@ -34,3 +45,10 @@ html.cMenuBtn.forEach(e => {
     }
   });
 });
+
+
+//modal menu
+html.menuBtnDetails.addEventListener('click', () => {
+  html.modalMenu.classList.toggle('active');
+});
+

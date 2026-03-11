@@ -54,22 +54,23 @@
 
 /*menu*/
 .menu {
+  &.active {
+    right: 0%;
+  }
+}
+
+.menu, .modal-menu {
   position: fixed;
-  top: 0;
+  top: 64px;
   right: -250px;
-  height: 100vh;
+  height: calc(100% - 64px);
   width: 250px;
   background: #0a0a0fcc;
   backdrop-filter: blur(20px);
   z-index: 10;
   transition: 0.2s ease;
-  padding: calc(1.5rem + 64px) 1rem 1.5rem 1rem;
+  padding: 1.5rem 1rem;
   overflow-y: auto;
-  
-  
-  &.active {
-    right: 0%;
-  }
   
   
   .menu__btn {
@@ -110,6 +111,31 @@
       &::before {
         clip-path: polygon(0 0, 100% 0%, 50% 100%);
       }
+    }
+  }
+}
+
+
+/*modal menu*/
+.modal-menu {
+  display: none;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  border-radius: 0 0 12px 12px;
+  right: 250px;
+  height: max-content;
+  max-height: calc(100% - 64px);
+  opacity: 0;
+  transition: opacity 0.5s ease, display 0.5s ease allow-discrete;
+  
+  
+  &.active {
+    display: flex;
+    opacity: 1;
+    
+    @starting-style {
+      opacity: 0;
     }
   }
 }

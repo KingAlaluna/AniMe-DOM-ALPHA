@@ -32,7 +32,7 @@
 </head>
 <body>
 
-<header>
+<header class="main-banner">
   <div class="logo">
     <h1>AniMe</h1>
   </div>
@@ -42,13 +42,30 @@
   </div>
 
   <nav class="nav-panel">
-    <button class="tab-btn active" onclick="switchTab('updates', this)">Новинки</button>
-    <!--<button class="tab-btn" onclick="switchTab('scheduleNow', this)">Теперішній розклад</button>
-    <button class="tab-btn" onclick="switchTab('scheduleWeek', this)">Недільний розклад</button>-->
-    <button class="tab-btn" onclick="switchTab('random', this)">Випадкові жанри</button>
+    <div class="nav-panel__panel panel-1">
+      <button class="menu__btn active" data-filter="updates">Новинки</button>
+      <button class="menu__btn" data-filter="random">Випадкові жанри</button>
+      <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
+    </div>
+    
+    <div class="nav-panel__panel panel-2">
+      <button class="menu__btn active" data-filter="updates">Новинки</button>
+      <button class="menu__btn" data-filter="random">Випадкові жанри</button>
+      <button class="menu__btn details" id="menu-btn-details" data-filter-list="scheduleNow">Теперішній розклад</button>
+      <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
+    </div>
+    
+    <div class="nav-panel__panel panel-3">
+      <button class="menu__btn active" data-filter="updates">Новинки</button>
+      <button class="menu__btn" data-filter="random">Випадкові жанри</button>
+      <button class="menu__btn" data-filter="yesterday">Вчора</button>
+      <button class="menu__btn" data-filter="today">Сьогодні</button>
+      <button class="menu__btn" data-filter="tomorrow">Завтра</button>
+      <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
+    </div>
   </nav>
   
-  <!--menu -->
+  <!--btn menu -->
   <button class="menu-btn" id="menu-btn" aria-label="меню">
     <span class="menu-btn__line line-1"></span>
     <span class="menu-btn__line line-2"></span>
@@ -75,6 +92,14 @@
     </details>
     
     <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
+  </nav>
+  
+  
+  <!--modal menu-->
+  <nav class="modal-menu" id="modal-menu">
+    <button class="menu__btn" data-filter="yesterday">Вчора</button>
+    <button class="menu__btn" data-filter="today">Сьогодні</button>
+    <button class="menu__btn" data-filter="tomorrow">Завтра</button>
   </nav>
   
   
