@@ -7,13 +7,14 @@ function switchTab(tab, btn) {
   loadTab(tab);
 }
 
-function goHome() {
-  html.searchInput.value = '';
-  data.currentTab = 'updates';
-  html.tabBtn.forEach((b, i) => b.classList.toggle('active', i === 0));
-  loadTab('updates');
-}
 
+function pageActive(page) {
+  html.searchInput.value = '';
+  html.allPage.forEach(e => {
+    e.style.display = 'none';
+  });
+  html[page].style.display = 'flex';
+}
 
 
 // --- FETCH HELPERS ---
@@ -38,3 +39,24 @@ function setLoading() {
 function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+
+
+
+//
+//router
+//
+//console.log(window.Navigo); 
+const router = new Navigo('/index.html', { hash: true });
+
+router.on({
+  '/': () => pageActive('mainPage'),
+  '/animeView': () => pageActive('animeViewing'),
+  
+  '/updates': () => loadTab('updates'),
+  '/genres-random': () => loadTab('genres-random'),
+  '/yesterday': () => loadTab('yesterday'),
+  '/today': () => loadTab('today'),
+  '/tomorrow': () => loadTab('tomorrow'),
+  '/scheduleWeek': () => loadTab('scheduleWeek'),
+}).resolve();
+

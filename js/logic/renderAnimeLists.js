@@ -16,8 +16,7 @@ async function renderGrid(list) {
     card.style.animationDelay = `${idx * 0.03}s`;
     
     card.onclick = () => {
-      html.animeViewing.style.display = 'flex';
-      html.mainPage.style.display = 'none';
+      router.navigate('/animeView');
       openTitle(a);
     };
     
@@ -115,8 +114,7 @@ async function renderReleaseGrid(list) {
     card.style.animationDelay = `${idx * 0.03}s`;
     
     card.onclick = () => {
-      html.animeViewing.style.display = 'flex';
-      html.mainPage.style.display = 'none';
+      router.navigate('/animeView');
       openTitle(a.release);
     };
     

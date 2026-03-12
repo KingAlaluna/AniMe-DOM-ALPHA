@@ -62,34 +62,6 @@ async function openTitle(anime) {
 
 
 
-function closeModal(event) {
-  if (event && event.target !== html.animeViewing) return;
-  doClose();
-}
-
-
-function doClose() {
-  html.animeViewing.style.display = 'none';
-  html.mainPage.style.display = 'flex';
-  html.description.classList.remove('active');
-  
-  html.videoPlayer.pause();
-  html.videoPlayer.src = '';
-  
-  vData.quality = 480;
-  vData.episode = 1;
-}
-
-
-html.html.addEventListener('keydown', e => {
-  if (e.key === 'Escape') doClose();
-});
-
-// init
-loadTab('updates');
-
-
-
 //
 //video quality
 //
@@ -160,3 +132,4 @@ function videoEpisode(url) {
 }
 
 
+loadTab('updates');

@@ -9,7 +9,7 @@ async function loadTab(tab) {
       html.sectionTitle.innerHTML = 'Свіжі <em>оновлення</em>';
       const data = await apiFetch();
       renderGrid(data);
-    } else if (tab === 'random') {
+    } else if (tab === 'genres-random') {
       html.sectionTitle.innerHTML = '<em>Випадкові</em> жанри';
       const data = await apiFetch(api.randomGenres);
       console.log('рандом жанри:', data);
@@ -52,3 +52,4 @@ async function loadTab(tab) {
     html.mainPage.innerHTML = '<div class="empty"><div class="empty-icon">📡</div><div class="empty-title">Помилка завантаження</div><p>Провірте підключення до інтернету</p></div>';
   }
 }
+

@@ -37,7 +37,7 @@ html.cMenuBtn.forEach(e => {
     }
     
     if (data2) {
-      loadTab(data2);
+      router.navigate(`/${data2}`);
     }
     
     if (dataList) {

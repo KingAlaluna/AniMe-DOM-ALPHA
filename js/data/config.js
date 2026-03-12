@@ -28,6 +28,7 @@ const html = {
   tabBtn: c('tab-btn'),
   menuBtnLine: c('menu-btn__line'),
   cMenuBtn: c('menu__btn'),
+  allPage: c('page'),
   
   
   //tags
@@ -69,3 +70,6 @@ const data = {
   
   scheduleNow: {},
 };
+
+
+

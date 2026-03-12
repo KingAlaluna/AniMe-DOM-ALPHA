@@ -44,20 +44,20 @@
   <nav class="nav-panel">
     <div class="nav-panel__panel panel-1">
       <button class="menu__btn active" data-filter="updates">Новинки</button>
-      <button class="menu__btn" data-filter="random">Випадкові жанри</button>
+      <button class="menu__btn" data-filter="genres-random">Випадкові жанри</button>
       <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
     </div>
     
     <div class="nav-panel__panel panel-2">
       <button class="menu__btn active" data-filter="updates">Новинки</button>
-      <button class="menu__btn" data-filter="random">Випадкові жанри</button>
+      <button class="menu__btn" data-filter="genres-random">Випадкові жанри</button>
       <button class="menu__btn details" id="menu-btn-details" data-filter-list="scheduleNow">Теперішній розклад</button>
       <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
     </div>
     
     <div class="nav-panel__panel panel-3">
       <button class="menu__btn active" data-filter="updates">Новинки</button>
-      <button class="menu__btn" data-filter="random">Випадкові жанри</button>
+      <button class="menu__btn" data-filter="genres-random">Випадкові жанри</button>
       <button class="menu__btn" data-filter="yesterday">Вчора</button>
       <button class="menu__btn" data-filter="today">Сьогодні</button>
       <button class="menu__btn" data-filter="tomorrow">Завтра</button>
@@ -80,7 +80,7 @@
   <!--menu navigation-->
   <nav class="menu" id="menu">
     <button class="menu__btn active" data-filter="updates">Новинки</button>
-    <button class="menu__btn" data-filter="random">Випадкові жанри</button>
+    <button class="menu__btn" data-filter="genres-random">Випадкові жанри</button>
     
     <details>
       <summary class="menu__btn" data-filter-list="scheduleNow">Теперішній розклад</summary>
@@ -104,8 +104,8 @@
   
   
   <!--render anime list-->
-  <div id="main-page" class="main-page">
-    <div id="errorBox" class="error-msg" style="display:none;"></div>
+  <div class="page main-page" id="main-page">
+    <div class="error-msg" id="errorBox" style="display:none;"></div>
     <h2 class="section-title" id="sectionTitle">Свіжі <em>оновленя</em></h2>
     
     <div class="loader" id="loader">
@@ -116,7 +116,7 @@
   
   
   <!--anime viewing -->
-  <div class="anime-viewing" id="anime-viewing">
+  <div class="page anime-viewing" id="anime-viewing">
     
     <div class="anime-view__header">
       <div class="anime-view__poster">
@@ -153,6 +153,7 @@
 <!--libraries-->
 <script defer src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
 <script defer src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<script defer src="https://unpkg.com/navigo"></script>
 
 
 <!--data-->
