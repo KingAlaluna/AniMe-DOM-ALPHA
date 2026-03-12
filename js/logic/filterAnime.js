@@ -2,6 +2,7 @@
 async function loadTab(tab) {
   if (tab != 'scheduleNow') {
     setLoading();
+    pageActive('mainPage');
   }
   try {
     //загальні
