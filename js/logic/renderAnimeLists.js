@@ -30,7 +30,7 @@ async function renderGrid(list) {
     const genres = a.genres?.map(e => e.name).join(', ');
     
     card.innerHTML = `
-      <img class="anime-card__poster img-blur" loading="lazy" src="${poster}" alt="${escHtml(name)}" ${idx > 5 ? 'loading="lazy"' : ''} onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="anime-card__poster img-blur" loading="lazy" src="${poster}" alt="${escHtml(name)}" ${idx < 6 ? 'fetchpriority="high"' : ''} ${idx > 5 ? 'loading="lazy"' : ''} onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="anime-card__poster-placeholder" style="display:${poster ? 'none' : 'flex'}">🎌</div>
       <div class="anime-card__body">
         <div class="anime-card__title">${escHtml(name)}</div>
