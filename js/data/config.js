@@ -1,6 +1,7 @@
 //html element
 const i = (id) => document.getElementById(id);
 const c = (classis) => document.querySelectorAll(`.${classis}`);
+const ac = (autoClassis) => document.getElementsByClassName(autoClassis);
 
 
 const html = {
@@ -31,6 +32,8 @@ const html = {
   menuBtnLine: c('menu-btn__line'),
   cMenuBtn: c('menu__btn'),
   allPage: c('page'),
+  animeCardImg: c('anime-card__poster'),
+  //animeCardImg: ac('anime-card__poster'),
   
   
   //tags

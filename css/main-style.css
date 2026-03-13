@@ -88,3 +88,6 @@ body {
 }
 
 
+.img-blur {
+  filter: blur(8px);
+}

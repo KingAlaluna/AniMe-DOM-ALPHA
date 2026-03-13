@@ -9,7 +9,7 @@ async function renderGrid(list) {
   grid.className = 'anime-grid';
   
   list.forEach((a, idx) => {
-    //console.log('Ответ сервера:', a);
+    console.log('Ответ сервера:', a);
     
     const card = document.createElement('div');
     card.className = 'anime-card';
@@ -20,7 +20,8 @@ async function renderGrid(list) {
       openTitle(a);
     };
     
-    const poster = `${api.imgApi + a.poster.optimized.src}`;
+    //const poster = `${api.imgApi + a.poster.optimized.src}`;
+    const poster = `${api.imgApi + a.poster.optimized.thumbnail}`;
     const name = a.name.main;
     const year = a.year;
     const rating = a.age_rating.label;
@@ -29,7 +30,7 @@ async function renderGrid(list) {
     const genres = a.genres?.map(e => e.name).join(', ');
     
     card.innerHTML = `
-      <img class="anime-card__poster" src="${poster}" alt="${escHtml(name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="anime-card__poster img-blur" loading="lazy" src="${poster}" alt="${escHtml(name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="anime-card__poster-placeholder" style="display:${poster ? 'none' : 'flex'}">🎌</div>
       <div class="anime-card__body">
         <div class="anime-card__title">${escHtml(name)}</div>
@@ -49,8 +50,21 @@ async function renderGrid(list) {
   
   html.loader.innerHTML = '';
   html.loader.appendChild(grid);
+  
+  html.animeCardImg = c('anime-card__poster');
+  
+  html.animeCardImg.forEach((e, idx) => {
+    e.onload = () => {
+      const poster = `${api.imgApi + list[idx].poster.optimized.src}`;
+      const imgLoader = new Image();
+      imgLoader.src = poster;
+      imgLoader.onload = () => {
+        e.src = poster;
+        e.classList.remove('img-blur');
+      };
+    };
+  });
 }
-
 
 
 //рендер жанрів
