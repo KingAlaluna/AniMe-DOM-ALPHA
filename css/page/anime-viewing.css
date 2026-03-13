@@ -88,6 +88,60 @@
     margin-top: 0.75rem;
   }
   
+  .anime-view__genres-panel {
+    height: max-content;
+    align-items: start;
+    overflow: auto;
+    flex-direction: row;
+    margin: 1.5rem 0;
+    gap: 1rem;
+    
+    .genres-panel__genre {
+      width: 150px;
+      height: max-content;
+      background: var(--card);
+      border: var(--border);
+      border-radius: 16px;
+      cursor: pointer;
+      transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      animation: fadeUp 0.4s ease both;
+      align-items: start;
+      
+      @media (min-width: 930px) {
+        & {
+          width: 200px;
+        }
+      }
+      @media (min-width: 1440px) {
+        & {
+          width: 200px;
+        }
+      }
+      @media (min-width: 1920px) {
+        & {
+          width: 250px;
+        }
+      }
+      
+      &:hover {
+        transform: translateY(-6px) scale(1.01);
+        border-color: #e84cff44;
+        box-shadow: 0 16px 40px #e84cff18, 0 4px 16px #00000044;
+      }
+      
+      .genre__img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 5/7;
+      }
+    }
+    
+    .genre__meta {
+      height: max-content;
+      padding: 1rem;
+    }
+  }
+  
   .info__desc {
     margin: 0.75rem 0;
     font-size: 0.82rem;

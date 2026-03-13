@@ -23,6 +23,8 @@ const html = {
   modalMenu: i('modal-menu'),
   menuBtnDetails: i('menu-btn-details'),
   loader: i('loader'),
+  titleEn: i('title-en'),
+  genresPanel: i('genres-panel'),
   
   episodeBtn: c('episode-btn'),
   tabBtn: c('tab-btn'),
