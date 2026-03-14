@@ -44,6 +44,8 @@ async function openTitle(anime) {
     const episode = a?.episodes_total ? a?.episodes_total : a?.latest_episode?.ordinal;
     //const genres = anime.genres?.map(e => e.name).join(', ');
     
+    html.genresPanel.innerHTML = '';
+    
     a.genres?.forEach(e => {
       const genre = document.createElement('div');
       genre.className = 'genres-panel__genre';
@@ -57,7 +59,6 @@ async function openTitle(anime) {
         </div>
       `;
       
-      html.genresPanel.innerHTML = '';
       html.genresPanel.appendChild(genre);
     });
     

@@ -1,3 +1,5 @@
+const VERSION = '1.0.1';
+
 self.addEventListener('install', (event) => {
   console.log('SW: Установлений');
 });
