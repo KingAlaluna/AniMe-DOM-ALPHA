@@ -4,9 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AniMe — дивитись аніме</title>
-  <meta name="description" content="AniMe — це сучасний онлайн-каталог аніме, що працює на базі Aniliberty API v1 (офіційне API AniLibria). Наша система забезпечує пошук аніме в режимі реального часу, надаючи користувачам доступ до величезної бази даних: жанри аніме, рейтинги, дати виходу та студії виробництва, а також детальну інформацію про аніме, персонажів аніме, акторів озвучки персонажів. Завдяки повній інтеграції з API, інформація про топ аніме, популярні серіали, новинки та інша завжди залишається актуальною для наших відвідувачів">
+  <meta name="description" content="AniMe — це сучасний онлайн-каталог аніме, що працює на базі Aniliberty API v1 (офіційне API AniLibria). Наша система забезпечує пошук аніме в режимі реального часу, надаючи користувачам доступ до величезної бази даних: жанри аніме, рейтинги, дати виходу та студії виробництва, а також детальну інформацію про аніме, персонажів аніме, акторів озвучки персонажів. Завдяки повній інтеграції з API, інформація про топ аніме, популярні серіали, новинки та інша завжди залишається актуальною для наших відвідувачів.">
   <link rel="icon" href="img/logo.svg" type="image/svg+xml">
-  
+  <link rel="manifest" href="manifest.json">
   
   <link rel="preconnect" href="https://fonts.googleapis.com" media="print" onload="this.media='all'">
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Noto+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -173,6 +173,21 @@
 <!--page logic-->
 <script defer src="js/logic/page/main.js"></script>
 <script defer src="js/logic/page/animeViewing.js"></script>
+
+
+<!--sw.js-->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', async () => {
+      try {
+        const reg = await navigator.serviceWorker.register('sw.js');
+        console.log('SW працює!', reg);
+      } catch (err) {
+        console.log('Помилка SW:', err);
+      }
+    });
+  }
+</script>
 
 </body>
 </html>

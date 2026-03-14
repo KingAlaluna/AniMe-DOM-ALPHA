@@ -1,4 +1,3 @@
-// --- SEARCH debounce ---
 let searchTimer;
 
 html.searchInput.addEventListener('input', () => {
@@ -21,14 +20,14 @@ async function searchAnime(query) {
   html.sectionTitle.innerHTML = `Пошук: <em>${escHtml(query)}</em>`;
   setLoading();
   try {
-    const data = await apiFetch(`${api.search}${encodeURIComponent(query)}`);
+    const dataA = await apiFetch(`${api.search}${encodeURIComponent(query)}`);
     
-    console.log('Пошук результат', data);
+    console.log('Пошук результат', dataA);
     
-    if (!data || data.length === 0) {
+    if (!dataA || dataA.length === 0) {
       html.loader.innerHTML = '<div class="empty"><div class="empty-icon">🔍</div><div class="empty-title">Нічого не знайдено </div><p>Попробуйте другий запит</p></div>';
     } else {
-      renderGrid(data);
+      renderGrid(dataA);
     }
   } catch (e) {
     showError('Помилка пошуку: ' + e.message);

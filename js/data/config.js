@@ -55,6 +55,9 @@ const api = {
   scheduleNow: 'https://aniliberty.top/api/v1/anime/schedule/now',
   scheduleWeek: 'https://aniliberty.top/api/v1/anime/schedule/week',
   
+  //anime: 'https://anilibria.top/api/v1/anime/releases/list?ids=9951,9433,5692&aliases=darling-in-the-franxx&page=1&limit=10&include=id,type.genres&exclude=poster,description',
+  anime: 'https://anilibria.top/api/v1/anime/releases/list?ids=',
+  
 };
 
 
@@ -72,6 +75,7 @@ const vData = {
 const data = {
   currentTab: 'updates',
   btnFiltersActive: null,
+  //search: false,
   
   scheduleNow: {},
 };

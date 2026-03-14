@@ -4,11 +4,16 @@ async function openTitle(anime) {
   html.episodesGrid.innerHTML = '<div class="loader"><div class="spinner"></div></div>';
   
   try {
-    const episodeId = anime.latest_episode.id;
-    const episodes = await fetch(api.episodeApi + episodeId);
-    const epsJson = await episodes.json();
-    const eps = await epsJson.release.episodes;
-    const a = await epsJson.release;
+    const id = anime.id;
+    const url = api.anime;
+    const ad = await fetch(url + id);
+    const d = await ad.json();
+    const a = await d.data[0];
+    const eps = a.episodes;
+    
+    console.log('Пошук аніме', d);
+    //console.log('url пошука аніме', a);
+    
     
     playEpisode(eps);
     renderEpisodes(eps);
@@ -22,7 +27,7 @@ async function openTitle(anime) {
       console.log('2 Дані епізода:', e);
     });
     */
-    console.log(a)
+    //console.log(a)
     
     
     // poster
@@ -39,7 +44,7 @@ async function openTitle(anime) {
     const episode = a?.episodes_total ? a?.episodes_total : a?.latest_episode?.ordinal;
     //const genres = anime.genres?.map(e => e.name).join(', ');
     
-    anime.genres?.forEach(e => {
+    a.genres?.forEach(e => {
       const genre = document.createElement('div');
       genre.className = 'genres-panel__genre';
       
@@ -52,6 +57,7 @@ async function openTitle(anime) {
         </div>
       `;
       
+      html.genresPanel.innerHTML = '';
       html.genresPanel.appendChild(genre);
     });
     
@@ -75,6 +81,7 @@ async function openTitle(anime) {
     console.log('Помилка завантаження тайтла: ' + e.message);
   }
 }
+
 
 
 

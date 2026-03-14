@@ -4,12 +4,14 @@ async function renderGrid(list) {
     html.loader.innerHTML = '<div class="empty"><div class="empty-icon">🎬</div><div class="empty-title">Пусто</div></div>';
     return;
   }
+  console.log('Ответ сервера:', list[0]);
   
   const grid = document.createElement('div');
   grid.className = 'anime-grid';
   
-  list.forEach((a, idx) => {
-    console.log('Ответ сервера:', a);
+  list.forEach((anime, idx) => {
+    //console.log('Ответ сервера:', a);
+    const a = anime.release ? anime.release : anime;
     
     const card = document.createElement('div');
     card.className = 'anime-card';
@@ -26,11 +28,11 @@ async function renderGrid(list) {
     const year = a.year;
     const rating = a.age_rating.label;
     const type = a.type.description;
-    const eps = a.episodes_total ? a.episodes_total : a.latest_episode.ordinal;
+    const eps = a.episodes_total ? a.episodes_total : a.latest_episode?.ordinal;
     const genres = a.genres?.map(e => e.name).join(', ');
     
     card.innerHTML = `
-      <img class="anime-card__poster img-blur" loading="lazy" src="${poster}" alt="${escHtml(name)}" ${idx < 6 ? 'fetchpriority="high"' : ''} ${idx > 5 ? 'loading="lazy"' : ''} onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <img class="anime-card__poster img-blur" ${idx < 6 ? 'fetchpriority="high"' : ''} ${idx > 5 ? 'loading="lazy"' : ''} src="${poster}" alt="${escHtml(name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
       <div class="anime-card__poster-placeholder" style="display:${poster ? 'none' : 'flex'}">🎌</div>
       <div class="anime-card__body">
         <div class="anime-card__title">${escHtml(name)}</div>
@@ -55,7 +57,7 @@ async function renderGrid(list) {
   
   html.animeCardImg.forEach((e, idx) => {
     e.onload = () => {
-      const poster = `${api.imgApi + list[idx].poster.optimized.src}`;
+      const poster = `${api.imgApi + (list[idx].release ? list[idx].release.poster.optimized.src : list[idx].poster.optimized.src)}`;
       const imgLoader = new Image();
       imgLoader.src = poster;
       imgLoader.onload = () => {
@@ -98,54 +100,6 @@ async function renderGenresGrid(list) {
       <div class="anime-card__poster-placeholder" style="display:${poster ? 'none' : 'flex'}">🎌</div>
       <div class="anime-card__body">
         <div class="anime-card__title">${escHtml(name)}</div>
-      </div>
-    `;
-    
-    grid.appendChild(card);
-  });
-  
-  html.loader.innerHTML = '';
-  html.loader.appendChild(grid);
-}
-
-
-
-//рендер релізів, графіків аніме
-async function renderReleaseGrid(list) {
-  if (!list || list.length === 0) {
-    html.loader.innerHTML = '<div class="empty"><div class="empty-icon">🎬</div><div class="empty-title">Пусто</div></div>';
-    return;
-  }
-  
-  const grid = document.createElement('div');
-  grid.className = 'anime-grid';
-  
-  list.forEach((a, idx) => {
-    //console.log('Ответ сервера:', a);
-    
-    const card = document.createElement('div');
-    card.className = 'anime-card';
-    card.style.animationDelay = `${idx * 0.03}s`;
-    
-    card.onclick = () => {
-      router.navigate('/animeView');
-      openTitle(a.release);
-    };
-    
-    const poster = `${api.imgApi + a.release.poster.optimized.src}`;
-    const name = a.release.name.main;
-    const year = a.release.year;
-    const eps = a.release.player;
-    
-    card.innerHTML = `
-      <img class="anime-card__poster" src="${poster}" alt="${escHtml(name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="anime-card__poster-placeholder" style="display:${poster ? 'none' : 'flex'}">🎌</div>
-      <div class="anime-card__body">
-        <div class="anime-card__title">${escHtml(name)}</div>
-        <div class="anime-card__meta">
-          ${year ? `<span class="badge">${year}</span>` : ''}
-          ${eps ? `<span class="badge badge--accent">${eps} эп.</span>` : ''}
-        </div>
       </div>
     `;
     

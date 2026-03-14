@@ -27,17 +27,17 @@ async function loadTab(tab) {
       html.sectionTitle.innerHTML = '<em>Розклад на</em> вчора';
       const datas = await data.scheduleNow.yesterday;
       console.log('Розклад на вчора:', datas);
-      renderReleaseGrid(datas);
+      renderGrid(datas);
     } else if (tab === 'today') {
       html.sectionTitle.innerHTML = '<em>Розклад на</em> сьогодні';
       const datas = await data.scheduleNow.today;
       console.log('Розклад на сьогоднї:', datas);
-      renderReleaseGrid(datas);
+      renderGrid(datas);
     } else if (tab === 'tomorrow') {
       html.sectionTitle.innerHTML = '<em>Розклад на</em> завтра';
       const datas = await data.scheduleNow.tomorrow;
       console.log('Розклад на завтра:', datas);
-      renderReleaseGrid(datas);
+      renderGrid(datas);
     }
     
     
@@ -46,9 +46,9 @@ async function loadTab(tab) {
       html.sectionTitle.innerHTML = '<em>Недільний розклад</em> вихода';
       const data = await apiFetch(api.scheduleWeek);
       console.log('Недільний розклад:', data);
-      renderReleaseGrid(data);
+      renderGrid(data);
     }
-  }  catch (e) {
+  } catch (e) {
     showError('Не вдалось завантажити дані: ' + e.message);
     html.mainPage.innerHTML = '<div class="empty"><div class="empty-icon">📡</div><div class="empty-title">Помилка завантаження</div><p>Провірте підключення до інтернету</p></div>';
   }
