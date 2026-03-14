@@ -1,0 +1,9 @@
+/*.plyr__controls * {
+  background-color: var(--accent2) !important;
+}*/
+
+.plyr__control {
+  /*background-color: var(--accent2);*/
+  /*color: #000;
+  stroke: #000;*/
+}

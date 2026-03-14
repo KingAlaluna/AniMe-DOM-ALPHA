@@ -1,0 +1,93 @@
+/*загальні стилі*/
+* {
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-sizing: border-box;
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+  /*content-visibility: auto;*/
+}
+
+html, body, div {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+
+div {
+  display: flex;
+  flex-direction: column;
+  justify-content: normal;
+  align-items: center;
+  position: relative;
+}
+
+
+button {
+  border-radius: 8px;
+  border: none;
+}
+
+iframe {
+  border: none;
+}
+
+
+input {
+  border: none;
+  outline: none;
+  
+  
+  &::placeholder {
+    opacity: 1;
+    color: var(--color-1);
+  }
+}
+
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans', sans-serif;
+  font-weight: 300;
+  overflow-x: hidden;
+  
+  
+  &::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 40% at 80% 10%, #3d006633 0%, transparent 60%),
+      radial-gradient(ellipse 40% 30% at 10% 80%, #1a006633 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+
+.section-title {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+  
+  em {
+    font-style: normal;
+    color: var(--accent);
+  }
+}
+
+
+.img-blur {
+  filter: blur(8px);
+}

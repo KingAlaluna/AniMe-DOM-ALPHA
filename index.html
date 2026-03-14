@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AniMe — дивитись аніме</title>
+  <meta name="description" content="AniMe — це сучасний онлайн-каталог аніме, що працює на базі Aniliberty API v1 (офіційне API AniLibria). Наша система забезпечує пошук аніме в режимі реального часу, надаючи користувачам доступ до величезної бази даних: жанри аніме, рейтинги, дати виходу та студії виробництва, а також детальну інформацію про аніме, персонажів аніме, акторів озвучки персонажів. Завдяки повній інтеграції з API, інформація про топ аніме, популярні серіали, новинки та інша завжди залишається актуальною для наших відвідувачів">
+  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com" media="print" onload="this.media='all'">
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Noto+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  
+  <!--style-->
+  <link rel="stylesheet" href="css/light-theme.css">
+  <link rel="stylesheet" href="css/dark-theme.css">
+  
+  <link rel="stylesheet" href="css/main-style.css">
+  <link rel="stylesheet" href="css/main-banner.css">
+  <link rel="stylesheet" href="css/menu.css">
+  <link rel="stylesheet" href="css/root.css">
+  
+  <!--page-->
+  <link rel="stylesheet" href="css/page/main.css">
+  <link rel="stylesheet" href="css/page/anime-viewing.css">
+  
+  <!--plyr-->
+  <link rel="stylesheet" href="css/plyr/plyr-config.css">
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="css/plyr/plyr-custom.css">
+  
+</head>
+<body>
+
+<header class="main-banner">
+  <div class="logo">
+    <h1>AniMe</h1>
+  </div>
+
+  <div class="search-wrap">
+    <input type="text" id="searchInput" placeholder="Пошук аніме..." autocomplete="off" />
+  </div>
+
+  <nav class="nav-panel">
+    <div class="nav-panel__panel panel-1">
+      <button class="menu__btn active" data-filter="updates">Новинки</button>
+      <button class="menu__btn" data-filter="genres-random">Випадкові жанри</button>
+      <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
+    </div>
+    
+    <div class="nav-panel__panel panel-2">
+      <button class="menu__btn active" data-filter="updates">Новинки</button>
+      <button class="menu__btn" data-filter="genres-random">Випадкові жанри</button>
+      <button class="menu__btn details" id="menu-btn-details" data-filter-list="scheduleNow">Теперішній розклад</button>
+      <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
+    </div>
+    
+    <div class="nav-panel__panel panel-3">
+      <button class="menu__btn active" data-filter="updates">Новинки</button>
+      <button class="menu__btn" data-filter="genres-random">Випадкові жанри</button>
+      <button class="menu__btn" data-filter="yesterday">Вчора</button>
+      <button class="menu__btn" data-filter="today">Сьогодні</button>
+      <button class="menu__btn" data-filter="tomorrow">Завтра</button>
+      <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
+    </div>
+  </nav>
+  
+  <!--btn menu -->
+  <button class="menu-btn" id="menu-btn" aria-label="меню">
+    <span class="menu-btn__line line-1"></span>
+    <span class="menu-btn__line line-2"></span>
+    <span class="menu-btn__line line-3"></span>
+  </button>
+  
+</header>
+
+
+<!--root-->
+<main class="root">
+  <!--menu navigation-->
+  <nav class="menu" id="menu">
+    <button class="menu__btn active" data-filter="updates">Новинки</button>
+    <button class="menu__btn" data-filter="genres-random">Випадкові жанри</button>
+    
+    <details>
+      <summary class="menu__btn" data-filter-list="scheduleNow">Теперішній розклад</summary>
+      <div class="">
+        <button class="menu__btn" data-filter="yesterday">Вчора</button>
+        <button class="menu__btn" data-filter="today">Сьогодні</button>
+        <button class="menu__btn" data-filter="tomorrow">Завтра</button>
+      </div>
+    </details>
+    
+    <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
+  </nav>
+  
+  
+  <!--modal menu-->
+  <nav class="modal-menu" id="modal-menu">
+    <button class="menu__btn" data-filter="yesterday">Вчора</button>
+    <button class="menu__btn" data-filter="today">Сьогодні</button>
+    <button class="menu__btn" data-filter="tomorrow">Завтра</button>
+  </nav>
+  
+  
+  <!--render anime list-->
+  <div class="page main-page" id="main-page">
+    <div class="error-msg" id="errorBox" style="display:none;"></div>
+    <h2 class="section-title" id="sectionTitle">Свіжі <em>оновленя</em></h2>
+    
+    <div class="loader" id="loader">
+      <div class="spinner"></div>
+      Завантаження...
+    </div>
+  </div>
+  
+  
+  <!--anime viewing -->
+  <div class="page anime-viewing" id="anime-viewing">
+    
+    <div class="anime-view__header">
+      <div class="anime-view__poster">
+        <img class="anime-view__poster-img" id="anime-poster-img" src="" alt="" />
+      </div>
+      <div class="anime-view__info">
+        <div class="info__title" id="title"></div>
+        <div class="info__title-en" id="title-en"></div>
+        <div class="info__badges" id="badges"></div>
+        <div class="anime-view__genres-panel" id="genres-panel">
+          
+        </div>
+        <div class="info__desc" id="description"></div>
+      </div>
+    </div>
+    
+    <div class="anime-view__body">
+      
+      <div class="player-section">
+        <div class="player-label">▶ Плеєр</div>
+        <div class="video-container">
+          <video class="video-player" id="video-player" ></video>
+        </div>
+      </div>
+      
+      <div class="episodes-wrap">
+        <div class="player-label">Епізоди</div>
+        <div class="episodes-grid" id="episodesGrid"></div>
+      </div>
+      
+    </div>
+  </div>
+  
+</main>
+
+
+<!--libraries-->
+<script defer src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+<script defer src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<script defer src="https://unpkg.com/navigo"></script>
+
+
+<!--data-->
+<script defer src="js/data/config.js"></script>
+
+
+<!--logic-->
+<script defer src="js/logic/mainLogic.js"></script>
+<script defer src="js/logic/menu.js"></script>
+<script defer src="js/logic/searchAnime.js"></script>
+<script defer src="js/logic/renderAnimeLists.js"></script>
+<script defer src="js/logic/filterAnime.js"></script>
+
+<!--page logic-->
+<script defer src="js/logic/page/main.js"></script>
+<script defer src="js/logic/page/animeViewing.js"></script>
+
+</body>
+</html>
+
