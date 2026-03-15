@@ -65,7 +65,7 @@ export function escHtml(s) {
 //router
 //
 //console.log(window.Navigo); 
-const root = window.location.pathname.includes('index.html') ? '/index.html' : '/';
+const root = window.location.pathname;
 export const router = new NavigoLib.default(root, { hash: true });
 
 
