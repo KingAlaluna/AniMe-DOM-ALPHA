@@ -1,3 +1,8 @@
+import {html, data} from '../data/config.js';
+import {router} from './mainLogic.js';
+import {loadTab} from './filterAnime.js';
+
+
 //main menu
 html.menuBtn.addEventListener('click', () => {
   html.menuBtnLine.forEach(e => {

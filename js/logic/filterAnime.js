@@ -1,9 +1,19 @@
+import {html, api, data} from '../data/config.js';
+import {apiFetch} from './mainLogic.js';
+import {renderGrid, renderGenresGrid} from './renderAnimeLists.js';
+
 // --- Filters ---
-async function loadTab(tab) {
+export async function loadTab(tab) {
   if (tab != 'scheduleNow') {
-    setLoading();
-    pageActive('mainPage');
+    //setLoading();
+    //pageActive('mainPage');
   }
+  if (data.currentTab == tab) {
+    return;
+  } else {
+    data.currentTab = tab;
+  }
+  
   try {
     //загальні
     if (tab === 'updates') {
@@ -49,8 +59,8 @@ async function loadTab(tab) {
       renderGrid(data);
     }
   } catch (e) {
-    showError('Не вдалось завантажити дані: ' + e.message);
-    html.mainPage.innerHTML = '<div class="empty"><div class="empty-icon">📡</div><div class="empty-title">Помилка завантаження</div><p>Провірте підключення до інтернету</p></div>';
+    //showError('Не вдалось завантажити дані: ' + e.message);
+    html.mainPage.innerHTML = `<div class="empty"><div class="empty-icon">📡</div><div class="empty-title">Помилка завантаження</div><p>${e.message}</p></div>`;
   }
 }
 

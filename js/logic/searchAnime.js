@@ -1,3 +1,9 @@
+import {html, api} from '../data/config.js';
+import {escHtml, apiFetch} from './mainLogic.js';
+import {loadTab} from './filterAnime.js';
+import {renderGrid} from './renderAnimeLists.js';
+
+
 let searchTimer;
 
 html.searchInput.addEventListener('input', () => {
@@ -18,7 +24,7 @@ html.searchInput.addEventListener('keydown', e => {
 
 async function searchAnime(query) {
   html.sectionTitle.innerHTML = `Пошук: <em>${escHtml(query)}</em>`;
-  setLoading();
+  //setLoading();
   try {
     const dataA = await apiFetch(`${api.search}${encodeURIComponent(query)}`);
     

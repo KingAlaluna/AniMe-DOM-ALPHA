@@ -1,10 +1,17 @@
-async function openTitle(anime) {
-  console.log('клік по аніме', anime);
+import Hls from 'https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.mjs';
+import Plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.mjs';
+
+import {html, api, vData, data, c} from '../../data/config.js';
+
+
+export async function openTitle(/*anime*/animeId) {
+  //console.log('клік по аніме', anime);
   
   html.episodesGrid.innerHTML = '<div class="loader"><div class="spinner"></div></div>';
   
   try {
-    const id = anime.id;
+    const id = animeId;
+    
     const url = api.anime;
     const ad = await fetch(url + id);
     const d = await ad.json();
@@ -78,7 +85,7 @@ async function openTitle(anime) {
     });
     
   } catch (e) {
-    showError('Помилка завантаження тайтла: ' + e.message);
+    //showError('Помилка завантаження тайтла: ' + e.message);
     console.log('Помилка завантаження тайтла: ' + e.message);
   }
 }
@@ -155,5 +162,3 @@ function videoEpisode(url) {
   });
 }
 
-
-loadTab('updates');

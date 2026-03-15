@@ -1,10 +1,10 @@
 //html element
 const i = (id) => document.getElementById(id);
-const c = (classis) => document.querySelectorAll(`.${classis}`);
+export const c = (classis) => document.querySelectorAll(`.${classis}`);
 const ac = (autoClassis) => document.getElementsByClassName(autoClassis);
 
 
-const html = {
+export const html = {
   //page
   mainPage: i('main-page'),
   animeViewing: i('anime-viewing'),
@@ -44,7 +44,7 @@ const html = {
 
 
 //api data
-const api = {
+export const api = {
   API: 'https://aniliberty.top/api/v1/anime/releases/latest',
   imgApi: 'https://static-libria.weekstorm.us',
   episodeApi: 'https://aniliberty.top/api/v1/anime/releases/episodes/',
@@ -63,7 +63,7 @@ const api = {
 
 
 //video data
-const vData = {
+export const vData = {
   episode: 0,
   quality: '480',
   hls: null,
@@ -72,8 +72,9 @@ const vData = {
 
 
 //data
-const data = {
-  currentTab: 'updates',
+export const data = {
+  page: null,
+  currentTab: null,
   btnFiltersActive: null,
   //search: false,
   
