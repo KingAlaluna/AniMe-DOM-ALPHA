@@ -10,53 +10,55 @@ export async function loadTab(tab) {
   }
   if (data.currentTab == tab) {
     return;
+    console.log('tab равен!!!');
   } else {
     data.currentTab = tab;
+    console.log('tab НЕ равен!!!');
   }
   
   try {
     //загальні
     if (tab === 'updates') {
       html.sectionTitle.innerHTML = 'Свіжі <em>оновлення</em>';
-      const data = await apiFetch();
-      renderGrid(data);
+      const result = await apiFetch();
+      renderGrid(result);
     } else if (tab === 'genres-random') {
       html.sectionTitle.innerHTML = '<em>Випадкові</em> жанри';
-      const data = await apiFetch(api.randomGenres);
-      console.log('рандом жанри:', data);
-      renderGenresGrid(data);
+      const result = await apiFetch(api.randomGenres);
+      console.log('рандом жанри:', result);
+      renderGenresGrid(result);
     }
     
     //недільний розклад
     else if (tab === 'scheduleNow') {
-      const datas = await apiFetch(api.scheduleNow);
-      console.log('Теперішній розклад:', datas);
-      data.scheduleNow = await datas;
+      const result = await apiFetch(api.scheduleNow);
+      console.log('Теперішній розклад:', result);
+      data.scheduleNow = await result;
     } 
     else if (tab === 'yesterday') {
       html.sectionTitle.innerHTML = '<em>Розклад на</em> вчора';
-      const datas = await data.scheduleNow.yesterday;
-      console.log('Розклад на вчора:', datas);
-      renderGrid(datas);
+      const result = await data.scheduleNow.yesterday;
+      console.log('Розклад на вчора:', result);
+      renderGrid(result);
     } else if (tab === 'today') {
       html.sectionTitle.innerHTML = '<em>Розклад на</em> сьогодні';
-      const datas = await data.scheduleNow.today;
-      console.log('Розклад на сьогоднї:', datas);
-      renderGrid(datas);
+      const result = await data.scheduleNow.today;
+      console.log('Розклад на сьогоднї:', result);
+      renderGrid(result);
     } else if (tab === 'tomorrow') {
       html.sectionTitle.innerHTML = '<em>Розклад на</em> завтра';
-      const datas = await data.scheduleNow.tomorrow;
-      console.log('Розклад на завтра:', datas);
-      renderGrid(datas);
+      const result = await data.scheduleNow.tomorrow;
+      console.log('Розклад на завтра:', result);
+      renderGrid(result);
     }
     
     
     //розклад на неділю
     else if (tab === 'scheduleWeek') {
       html.sectionTitle.innerHTML = '<em>Недільний розклад</em> вихода';
-      const data = await apiFetch(api.scheduleWeek);
-      console.log('Недільний розклад:', data);
-      renderGrid(data);
+      const result = await apiFetch(api.scheduleWeek);
+      console.log('Недільний розклад:', result);
+      renderGrid(result);
     }
   } catch (e) {
     //showError('Не вдалось завантажити дані: ' + e.message);
