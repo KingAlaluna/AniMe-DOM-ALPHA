@@ -1,0 +1,26 @@
+.btn-number {
+  background: var(--card);
+  border: var(--border);
+  color: var(--text);
+  font-family: 'Unbounded', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 700;
+  /*padding: 0.5rem 0.75rem;*/
+  cursor: pointer;
+  transition: all 0.15s;
+  width: 100%;
+  height: 40px;
+  
+  
+  &:hover {
+    border-color: var(--accent); 
+    color: var(--accent);
+  }
+  
+  &.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+    box-shadow: 0 0 16px var(--glow);
+  }
+}

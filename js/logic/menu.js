@@ -1,6 +1,6 @@
 import {html, data} from '../data/config.js';
 import {router} from './mainLogic.js';
-import {loadTab} from './filterAnime.js';
+import {loadTab, anineFilter} from './filterAnime.js';
 
 
 //main menu
@@ -16,6 +16,8 @@ html.cMenuBtn.forEach(e => {
   e.addEventListener('click', () => {
     const data2 = e.dataset.filter;
     const dataList = e.dataset.filterList;
+    const dataType = e.dataset.type;
+    
     if (data2) {
       data.btnFiltersActive = e;
     }
@@ -41,8 +43,18 @@ html.cMenuBtn.forEach(e => {
       });
     }
     
-    if (data2) {
-      router.navigate(`/${data2}`);
+    if (data2 && data.currentTab != data2 && !dataType) {
+      if (data2 != 'main') {
+        router.navigate(`/${data2}`);
+      } else {
+        router.navigate(`/`);
+      }
+    } 
+    
+    if (data2 && data.currentTab != data2 && dataType) {
+      //anineFilter(dataType, data2);
+      router.navigate(`/filters/${dataType}/${data2}`);
+      console.log('Клік на кнопку фільтру!', e.textContent);
     }
     
     if (dataList) {

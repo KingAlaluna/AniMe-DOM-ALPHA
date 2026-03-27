@@ -14,7 +14,6 @@
   background: var(--card);
   border: var(--border);
   border-radius: 16px;
-  overflow: hidden;
   cursor: pointer;
   transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
   animation: fadeUp 0.4s ease both;
@@ -55,8 +54,6 @@
   width: 100%;
   aspect-ratio: 3/4;
   background: linear-gradient(135deg, var(--surface), var(--card));
-  display: flex;
-  align-items: center;
   justify-content: center;
   font-size: 3rem;
   opacity: 0.3;
@@ -139,6 +136,7 @@
     transform: rotate(360deg); 
   } 
 }
+
 
 
 @media (min-width: 930px) {

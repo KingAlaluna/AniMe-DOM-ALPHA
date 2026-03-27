@@ -1,5 +1,5 @@
-import {html, api} from '../data/config.js';
-import {escHtml, apiFetch} from './mainLogic.js';
+import {html, api, data} from '../data/config.js';
+import {escHtml, apiFetch, router} from './mainLogic.js';
 import {loadTab} from './filterAnime.js';
 import {renderGrid} from './renderAnimeLists.js';
 
@@ -10,24 +10,29 @@ html.searchInput.addEventListener('input', () => {
   clearTimeout(searchTimer);
   const q = html.searchInput.value.trim();
   if (q.length < 2) {
-    if (!q) loadTab(data.currentTab);
+    //if (!q) loadTab(data.currentTab);
     return;
   }
-  searchTimer = setTimeout(() => searchAnime(q), 400);
+  searchTimer = setTimeout(() => {
+    //searchAnime(q);
+    router.navigate(`/search/${q}`);
+  }, 400);
 });
 
 html.searchInput.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { html.searchInput.value = ''; loadTab(currentTab); }
+  if (e.key === 'Escape') { 
+    html.searchInput.value = '';
+    //loadTab(currentTab);
+  }
 });
 
 
 
-async function searchAnime(query) {
-  html.sectionTitle.innerHTML = `Пошук: <em>${escHtml(query)}</em>`;
+export async function searchAnime(query) {
+  html.sectionTitle.innerHTML = `<em>Пошук:</em> ${escHtml(query)}`;
   //setLoading();
   try {
     const dataA = await apiFetch(`${api.search}${encodeURIComponent(query)}`);
-    
     console.log('Пошук результат', dataA);
     
     if (!dataA || dataA.length === 0) {

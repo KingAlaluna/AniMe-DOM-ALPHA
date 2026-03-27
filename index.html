@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/light-theme.css">
   <link rel="stylesheet" href="css/dark-theme.css">
   
+  <link rel="stylesheet" href="css/templates.css">
   <link rel="stylesheet" href="css/main-style.css">
   <link rel="stylesheet" href="css/main-banner.css">
   <link rel="stylesheet" href="css/menu.css">
@@ -43,21 +44,21 @@
 
   <nav class="nav-panel">
     <div class="nav-panel__panel panel-1">
-      <button class="menu__btn active" data-filter="updates">Новинки</button>
-      <button class="menu__btn" data-filter="genres-random">Випадкові жанри</button>
+      <button class="menu__btn active" data-filter="main">Головна</button>
+      <button class="menu__btn" data-filter="updates">Новинки</button>
       <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
     </div>
     
     <div class="nav-panel__panel panel-2">
-      <button class="menu__btn active" data-filter="updates">Новинки</button>
-      <button class="menu__btn" data-filter="genres-random">Випадкові жанри</button>
+      <button class="menu__btn active" data-filter="main">Головна</button>
+      <button class="menu__btn" data-filter="updates">Новинки</button>
       <button class="menu__btn details" id="menu-btn-details" data-filter-list="scheduleNow">Теперішній розклад</button>
       <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
     </div>
     
     <div class="nav-panel__panel panel-3">
-      <button class="menu__btn active" data-filter="updates">Новинки</button>
-      <button class="menu__btn" data-filter="genres-random">Випадкові жанри</button>
+      <button class="menu__btn active" data-filter="main">Головна</button>
+      <button class="menu__btn" data-filter="updates">Новинки</button>
       <button class="menu__btn" data-filter="yesterday">Вчора</button>
       <button class="menu__btn" data-filter="today">Сьогодні</button>
       <button class="menu__btn" data-filter="tomorrow">Завтра</button>
@@ -79,15 +80,14 @@
 <main class="root">
   <!--menu navigation-->
   <nav class="menu" id="menu">
-    <button class="menu__btn active" data-filter="updates">Новинки</button>
-    <button class="menu__btn" data-filter="genres-random">Випадкові жанри</button>
+    <button class="menu__btn active" data-filter="main">Головна</button>
+    <button class="menu__btn" data-filter="updates">Новинки</button>
     
     <details>
       <summary class="menu__btn" data-filter-list="scheduleNow">Жанри</summary>
       <div class="">
-        <button class="menu__btn" data-filter="yesterday">Вчора</button>
-        <button class="menu__btn" data-filter="today">Сьогодні</button>
-        <button class="menu__btn" data-filter="tomorrow">Завтра</button>
+        <button class="menu__btn" data-filter="genres-all">Всі жанри</button>
+        <button class="menu__btn" data-filter="genres-random">Випадкові жанри</button>
       </div>
     </details>
     
@@ -102,14 +102,65 @@
     
     <button class="menu__btn" data-filter="scheduleWeek">Недільний розклад</button>
     
+    
+    <!--filters-->
+    <h3>Фільтер аніме:</h3>
     <details>
-      <summary class="menu__btn" data-filter-list="scheduleNow">Фільтер</summary>
-      <div class="">
-        <button class="menu__btn" data-filter="yesterday">Вчора</button>
-        <button class="menu__btn" data-filter="today">Сьогодні</button>
-        <button class="menu__btn" data-filter="tomorrow">Завтра</button>
+      <summary class="menu__btn" data-filter-list="scheduleNow">Тип</summary>
+      <div class="wrap-filter-btn" data-wrap-filter="types">
+        <!--content adds js-->
       </div>
     </details>
+    
+    <details>
+      <summary class="menu__btn" data-filter-list="scheduleNow">Рік</summary>
+      <div class="wrap-filter-btn grid" data-wrap-filter="years">
+        <!--content adds js-->
+      </div>
+    </details>
+    
+    <details>
+      <summary class="menu__btn" data-filter-list="scheduleNow">Віковий рейтинг</summary>
+      <div class="wrap-filter-btn grid" data-wrap-filter="ageRatings">
+        <!--content adds js-->
+      </div>
+    </details>
+    
+    <details>
+      <summary class="menu__btn" data-filter-list="scheduleNow">Жанр</summary>
+      <div class="wrap-filter-btn" data-wrap-filter="genres">
+        <!--content adds js-->
+      </div>
+    </details>
+    
+    <details>
+      <summary class="menu__btn" data-filter-list="scheduleNow">Сезон</summary>
+      <div class="wrap-filter-btn" data-wrap-filter="seasons">
+        <!--content adds js-->
+      </div>
+    </details>
+    
+    <details>
+      <summary class="menu__btn" data-filter-list="scheduleNow">Онгоїнг статус</summary>
+      <div class="wrap-filter-btn" data-wrap-filter="ongoings">
+        <!--content adds js-->
+      </div>
+    </details>
+    
+    <details>
+      <summary class="menu__btn" data-filter-list="scheduleNow">Випуск статус</summary>
+      <div class="wrap-filter-btn" data-wrap-filter="productions">
+        <!--content adds js-->
+      </div>
+    </details>
+    
+    <details>
+      <summary class="menu__btn" data-filter-list="scheduleNow">Загальне</summary>
+      <div class="wrap-filter-btn" data-wrap-filter="generals">
+        <!--content adds js-->
+      </div>
+    </details>
+    
   </nav>
   
   
@@ -124,11 +175,15 @@
   <!--render anime list-->
   <div class="page main-page" id="main-page">
     <div class="error-msg" id="errorBox" style="display:none;"></div>
-    <h2 class="section-title" id="sectionTitle">Свіжі <em>оновленя</em></h2>
+    <h2 class="section-title" id="sectionTitle"><em>Головна</em> сторінка</h2>
     
     <div class="loader" id="loader">
       <div class="spinner"></div>
       Завантаження...
+    </div>
+    
+    <div class="pagin" id="pagin">
+      <!--контент додає js-->
     </div>
   </div>
   
@@ -180,9 +235,8 @@
     window.addEventListener('load', async () => {
       try {
         const reg = await navigator.serviceWorker.register('sw.js');
-        console.log('SW працює!', reg);
       } catch (err) {
-        console.log('Помилка SW:', err);
+        console.error('Помилка SW:', err);
       }
     });
   }

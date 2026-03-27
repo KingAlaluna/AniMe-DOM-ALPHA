@@ -45,6 +45,8 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
+  justify-items: start;
+  align-items: start;
 }
 
 .anime-view__poster {
@@ -90,15 +92,30 @@
   
   .anime-view__genres-panel {
     height: max-content;
-    align-items: start;
-    overflow: auto;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     margin: 1.5rem 0;
     gap: 1rem;
     
+    @media (min-width: 1200px) {
+      & {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      }
+    }
+    @media (min-width: 1440px) {
+      & {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      }
+    }
+    @media (min-width: 1920px) {
+      & {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      }
+    }
+    
     .genres-panel__genre {
-      width: 150px;
-      height: max-content;
+      width: 100%;
+      height: 100%;
       background: var(--card);
       border: var(--border);
       border-radius: 16px;
@@ -107,21 +124,6 @@
       animation: fadeUp 0.4s ease both;
       align-items: start;
       
-      @media (min-width: 930px) {
-        & {
-          width: 200px;
-        }
-      }
-      @media (min-width: 1440px) {
-        & {
-          width: 200px;
-        }
-      }
-      @media (min-width: 1920px) {
-        & {
-          width: 250px;
-        }
-      }
       
       &:hover {
         transform: translateY(-6px) scale(1.01);
@@ -139,6 +141,18 @@
     .genre__meta {
       height: max-content;
       padding: 1rem;
+      
+      .meta__text-genre {
+        font-size: 0.65rem;
+        font-family: 'Unbounded', sans-serif;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.5;
+        max-width: 100%;
+        overflow-wrap: break-word;
+      }
     }
   }
   
@@ -202,36 +216,23 @@
 }
 
 .episodes-grid {
-  flex-direction: row;
-  flex-wrap: wrap;
+  /*flex-direction: row;
+  flex-wrap: wrap;*/
   gap: 0.5rem;
   margin-top: 0.75rem;
+  display: grid;
+  grid-template: auto / repeat(auto-fill, minmax(50px, 1fr));
 }
 
 .episode-btn {
-  background: var(--card);
-  border: var(--border);
-  color: var(--text);
-  font-family: 'Unbounded', sans-serif;
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 0.5rem 0.75rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.15s;
+  width: 100%;
   
-  
-  &:hover {
-    border-color: var(--accent); 
-    color: var(--accent);
-  }
-  
-  &.active {
+  /*&.active {
     background: var(--accent);
     border-color: var(--accent);
     color: #fff;
     box-shadow: 0 0 16px var(--glow);
-  }
+  }*/
 }
 
 
@@ -272,7 +273,7 @@
 
 
 
-@media (orientation: landscape) {
+@media (orientation: landscape), (min-width: 930px) {
   .anime-view__header {
     grid-template-columns: 1fr 1fr;
   }

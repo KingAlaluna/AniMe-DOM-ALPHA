@@ -4,6 +4,20 @@ import Plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.mjs';
 import {html, api, vData, data, c} from '../../data/config.js';
 
 
+export function videoConfigStart() {
+  vData.episode = 0;
+  vData.quality = '480';
+  if (vData.hls) {
+    vData.hls.destroy();
+    vData.hls = null;
+  }
+  /*if (vData.player) {
+    vData.player.destroy();
+    vData.player = null;
+  }*/
+}
+
+
 export async function openTitle(/*anime*/animeId) {
   //console.log('клік по аніме', anime);
   
@@ -57,12 +71,13 @@ export async function openTitle(/*anime*/animeId) {
       const genre = document.createElement('div');
       genre.className = 'genres-panel__genre';
       
-      const poster = api.imgApi + e.image.optimized.preview;
+      //const poster = api.imgApi + e.image.optimized.preview;
+      const poster = api.imgApi + e.image.optimized.thumbnail;
       
       genre.innerHTML = `
-        <img class="genre__img" src="${poster}" />
+        <img class="genre__img img-blur" src="${poster}" />
         <div class="genre__meta">
-          <span class="badge badge--accent">${e.name}</span>
+          <span class="meta__text-genre badge--accent">${e.name}</span>
         </div>
       `;
       
@@ -80,15 +95,30 @@ export async function openTitle(/*anime*/animeId) {
     
     
     html.description.textContent = a.description || '';
-    html.description.addEventListener('click', () => {
-      html.description.classList.toggle('active');
-    });
     
+    
+    html.genreImg = c('genre__img');
+    
+    html.genreImg.forEach((e, idx) => {
+      e.onload = () => {
+        const poster = `${api.imgApi + a.genres[idx].image.optimized.preview}`;
+        const imgLoader = new Image();
+        imgLoader.src = poster;
+        imgLoader.onload = () => {
+          e.src = poster;
+          e.classList.remove('img-blur');
+        };
+      };
+    });
   } catch (e) {
     //showError('Помилка завантаження тайтла: ' + e.message);
     console.log('Помилка завантаження тайтла: ' + e.message);
   }
 }
+
+html.description.addEventListener('click', () => {
+  html.description.classList.toggle('active');
+});
 
 
 
@@ -98,7 +128,7 @@ export async function openTitle(/*anime*/animeId) {
 //
 function videoQuality(url) {
   //plyr player
-  const player = new Plyr(html.videoPlayer, {
+  vData.player = new Plyr(html.videoPlayer, {
     quality: {
       default: 480,
       options: [1080, 720, 480],
@@ -139,7 +169,7 @@ function playEpisode(ep) {
 //
 function renderEpisodes(eps) {
   html.episodesGrid.innerHTML = eps.map((ep, i) =>
-    `<button class="episode-btn ${i == 0 ? 'active' : ''}" data-episode="${i}">${i + 1}</button>`
+    `<button class="btn-number episode-btn ${i == 0 ? 'active' : ''}" data-episode="${i}">${i + 1}</button>`
   ).join('');
   html.episodeBtn = c('episode-btn');
 }

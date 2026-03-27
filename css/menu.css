@@ -72,6 +72,11 @@
   padding: 1.5rem 1rem;
   overflow-y: auto;
   
+  h3 {
+    width: 100%;
+    text-align: center;
+    margin: 1rem 0;
+  }
   
   .menu__btn {
     height: 40px;
@@ -93,7 +98,8 @@
     font-size: 1rem;
     border-radius: 8px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    padding: 0 1rem;
     align-items: center;
     position: relative;
     
@@ -112,6 +118,18 @@
         clip-path: polygon(0 0, 100% 0%, 50% 100%);
       }
     }
+  }
+}
+
+details > div {
+  &.wrap-filter-btn.grid {
+    display: grid;
+    grid-template: auto / repeat(auto-fill, minmax(60px, 1fr));
+    gap: 0 1rem;
+  }
+  
+  .menu__btn.menu__btn {
+    background: var(--card-2);
   }
 }
 

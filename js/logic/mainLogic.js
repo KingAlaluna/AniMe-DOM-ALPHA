@@ -3,14 +3,16 @@ import * as NavigoLib from 'https://esm.sh/navigo';
 
 //critical
 import {html, api, data} from '../data/config.js';
-import {openTitle} from './page/animeViewing.js';
-import {loadTab} from './filterAnime.js';
+import {btnMapValue} from '../data/filter.js';
+import {openTitle, videoConfigStart} from './page/animeViewing.js';
+import {loadTab, anineFilter} from './filterAnime.js';
+import {searchAnime} from './searchAnime.js';
 
 //no critical
 import './menu.js';
 import './renderAnimeLists.js';
-import './filterAnime.js';
-import './searchAnime.js';
+//import './filterAnime.js';
+//import './searchAnime.js';
 
 
 // --- NAV ---
@@ -30,6 +32,7 @@ function pageActive(page) {
     html.searchInput.value = '';
     html.allPage.forEach(e => {
       e.style.display = 'none';
+      //e.scrollTo(0, 0);
     });
     html[page].style.display = 'flex';
   }
@@ -60,19 +63,41 @@ export function escHtml(s) {
 }
 
 
+async function scheduleNow(type) {
+  if (Object.keys(data.scheduleNow).length == 0) {
+    const result = await apiFetch(api.scheduleNow);
+    data.scheduleNow = await result;
+    console.log('Теперішній розклад результат!!!', result);
+  }
+  pageActive('mainPage');
+  loadTab(type);
+}
+
+
 
 //
 //router
 //
-//console.log(window.Navigo); 
+//console.log(window.Navigo);
 const root = window.location.pathname;
 export const router = new NavigoLib.default(root, { hash: true });
 
+router.hooks({
+  after: (match) => {
+    videoConfigStart();
+  }
+});
 
 router.on({
   '/': () => {
     pageActive('mainPage');
-    loadTab('updates');
+    loadTab('main');
+  },
+  
+  '/search/:name': (match) => {
+    pageActive('mainPage');
+    searchAnime(match.data.name);
+    //loadTab('search/:name');
   },
   
   '/animeView/:id': (match) => {
@@ -86,29 +111,45 @@ router.on({
     loadTab('updates');
   },
   
+  //жанри 
   '/genres-random': () => {
     pageActive('mainPage');
     loadTab('genres-random');
   },
   
-  '/yesterday': () => {
+  '/genres-all': () => {
     pageActive('mainPage');
-    loadTab('yesterday');
+    loadTab('genres-all');
+  },
+  
+  
+  
+  '/yesterday': () => {
+    scheduleNow('yesterday');
   },
   
   '/today': () => {
-    pageActive('mainPage');
-    loadTab('today');
+    scheduleNow('today');
   },
   
   '/tomorrow': () => {
-    pageActive('mainPage');
-    loadTab('tomorrow');
+    scheduleNow('tomorrow');
   },
   
   '/scheduleWeek': () => {
     pageActive('mainPage');
     loadTab('scheduleWeek');
+  },
+  
+  
+  //filters
+  '/filters/:type/:value': (match) => {
+    const type = match.data.type;
+    const value = match.data.value;
+    const name = type != 'years' ? btnMapValue[type].get(value) : null;
+    
+    pageActive('mainPage');
+    anineFilter(type, value, name);
   },
   
 }).resolve();

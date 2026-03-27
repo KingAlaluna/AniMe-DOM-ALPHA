@@ -34,6 +34,12 @@ export const html = {
   allPage: c('page'),
   animeCardImg: c('anime-card__poster'),
   //animeCardImg: ac('anime-card__poster'),
+  genreImg: c('genre__img'),
+  wrapFilterBtn: c('wrap-filter-btn'),
+  
+  //пагинация
+  pagin: i('pagin'),
+  paginBtn: c('pagin-btn'),
   
   
   //tags
@@ -52,12 +58,18 @@ export const api = {
   
   
   randomGenres: 'https://aniliberty.top/api/v1/anime/genres/random',
+  allGenres: 'https://aniliberty.top/api/v1/anime/genres',
+  
   scheduleNow: 'https://aniliberty.top/api/v1/anime/schedule/now',
   scheduleWeek: 'https://aniliberty.top/api/v1/anime/schedule/week',
   
   //anime: 'https://anilibria.top/api/v1/anime/releases/list?ids=9951,9433,5692&aliases=darling-in-the-franxx&page=1&limit=10&include=id,type.genres&exclude=poster,description',
   anime: 'https://anilibria.top/api/v1/anime/releases/list?ids=',
   
+  catalog: 'https://anilibria.top/api/v1/anime/catalog/releases',
+  //catalog: 'https://anilibria.top/api/v1/doramy/catalog/releases',
+  filterTotal: 'https://anilibria.top/api/v1/anime/catalog/releases?limit=10&page=1&f[genres]=15,20&f[types]=TV,WEB&f[years][from_year]=2016&f[years][to_year]=2020&f[sorting]=RATING_DESC',
+  active: 'https://anilibria.top/api/v1/anime/catalog/releases',
 };
 
 
@@ -67,6 +79,7 @@ export const vData = {
   episode: 0,
   quality: '480',
   hls: null,
+  player: null,
 };
 
 
@@ -74,7 +87,7 @@ export const vData = {
 //data
 export const data = {
   page: null,
-  currentTab: null,
+  //currentTab: null,
   btnFiltersActive: null,
   //search: false,
   
