@@ -177,14 +177,18 @@
 
 .anime-view__body { 
   height: max-content;
+  
+  .wrap {
+    margin: 1.5rem 0;
+    
+    .grid {
+      margin: 0.75rem 0 0 0;
+    }
+  }
 }
 
 
 /* VIDEO PLAYER */
-.player-section { 
-  margin: 1.5rem 0; 
-}
-
 .player-label {
   font-family: 'Unbounded', sans-serif;
   font-size: 0.7rem;
@@ -211,28 +215,14 @@
 
 
 /* EPISODE LIST */
-.episodes-wrap {
-  margin-top: 1.25rem;
-}
-
 .episodes-grid {
-  /*flex-direction: row;
-  flex-wrap: wrap;*/
   gap: 0.5rem;
-  margin-top: 0.75rem;
   display: grid;
   grid-template: auto / repeat(auto-fill, minmax(50px, 1fr));
 }
 
 .episode-btn {
   width: 100%;
-  
-  /*&.active {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #fff;
-    box-shadow: 0 0 16px var(--glow);
-  }*/
 }
 
 

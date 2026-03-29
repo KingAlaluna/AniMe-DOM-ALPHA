@@ -124,7 +124,6 @@ export const btnMapValue = {};
 //logic push btn filter
 while (years > 1994) {
   allFilter.years.push(new Btn({type: 'years', name: years}).btn);
-  //console.log('Year', allFilter.year)
   years -= 1;
 }
 
@@ -133,7 +132,6 @@ function addGeneral(value) {
   
   btnValue[value].forEach(e => {
     allFilter[value].push(new Btn({type: value, key: e[0], name: e[1]}).btn);
-    //console.log(`${value}`, allFilter[value])
   });
 }
 
@@ -144,6 +142,4 @@ addGeneral('ageRatings');
 addGeneral('ongoings');
 addGeneral('productions');
 addGeneral('generals');
-
-
 

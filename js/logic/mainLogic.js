@@ -11,8 +11,6 @@ import {searchAnime} from './searchAnime.js';
 //no critical
 import './menu.js';
 import './renderAnimeLists.js';
-//import './filterAnime.js';
-//import './searchAnime.js';
 
 
 // --- NAV ---
@@ -97,7 +95,6 @@ router.on({
   '/search/:name': (match) => {
     pageActive('mainPage');
     searchAnime(match.data.name);
-    //loadTab('search/:name');
   },
   
   '/animeView/:id': (match) => {
@@ -146,7 +143,7 @@ router.on({
   '/filters/:type/:value': (match) => {
     const type = match.data.type;
     const value = match.data.value;
-    const name = type != 'years' ? btnMapValue[type].get(value) : null;
+    const name = type != 'years' ? btnMapValue[type].get(isNaN(value) ? value : Number(value)) : null;
     
     pageActive('mainPage');
     anineFilter(type, value, name);

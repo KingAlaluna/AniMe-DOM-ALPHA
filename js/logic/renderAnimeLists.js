@@ -155,8 +155,8 @@ function paginBtnRender(pagesTotal, pagesTotalStatus) {
           
           const page = e.dataset.page;
           if (page) {
-            filters.page = page;
-            api.active = `${api.catalog}?${new URLSearchParams(filters).toString()}`;
+            filters.config.page = page;
+            api.active = `${api.catalog}?${new URLSearchParams(filters.config).toString()}`;
             const newAnimes = await apiFetch(`${api.active}`);
             renderGrid(newAnimes);
             console.log('КЛІК НА КНОПКУ ПАГІНАЦІЇ!');
@@ -167,8 +167,8 @@ function paginBtnRender(pagesTotal, pagesTotalStatus) {
           if (!page) {
             console.log('КЛІК НА ЕНТЕР ПАГІНАЦІЇ!');
             if (e.value > 0 && e.value <= pagesTotal) {
-              filters.page = e.value;
-              api.active = `${api.catalog}?${new URLSearchParams(filters).toString()}`;
+              filters.config.page = e.value;
+              api.active = `${api.catalog}?${new URLSearchParams(filters.config).toString()}`;
               const newAnimes = await apiFetch(`${api.active}`);
               renderGrid(newAnimes);
             } else {

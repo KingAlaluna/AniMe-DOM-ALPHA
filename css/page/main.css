@@ -6,7 +6,7 @@
 /* GRID */
 .anime-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-template: auto / repeat(auto-fill, minmax(150px, 1fr));
   gap: 1.25rem;
 }
 
@@ -42,7 +42,11 @@
 }
 
 
-.anime-card__poster {
+.anime-card__poster,
+.anime-franchises__poster,
+.anime-similar__poster,
+.anime-member__img,
+.anime-no-img {
   width: 100%;
   height: auto;
   aspect-ratio: 5/7;
@@ -51,7 +55,7 @@
 }
 
 .anime-card__poster-placeholder {
-  width: 100%;
+  height: auto;
   aspect-ratio: 3/4;
   background: linear-gradient(135deg, var(--surface), var(--card));
   justify-content: center;

@@ -1,7 +1,7 @@
 import {html, api, data} from '../data/config.js';
 import {escHtml, apiFetch, router} from './mainLogic.js';
-import {loadTab} from './filterAnime.js';
-import {renderGrid} from './renderAnimeLists.js';
+import {filters} from './filterAnime.js';
+import {renderGrid, paginBtn} from './renderAnimeLists.js';
 
 
 let searchTimer;
@@ -10,19 +10,16 @@ html.searchInput.addEventListener('input', () => {
   clearTimeout(searchTimer);
   const q = html.searchInput.value.trim();
   if (q.length < 2) {
-    //if (!q) loadTab(data.currentTab);
     return;
   }
   searchTimer = setTimeout(() => {
-    //searchAnime(q);
     router.navigate(`/search/${q}`);
-  }, 400);
+  }, 500);
 });
 
 html.searchInput.addEventListener('keydown', e => {
   if (e.key === 'Escape') { 
     html.searchInput.value = '';
-    //loadTab(currentTab);
   }
 });
 
@@ -30,18 +27,27 @@ html.searchInput.addEventListener('keydown', e => {
 
 export async function searchAnime(query) {
   html.sectionTitle.innerHTML = `<em>Пошук:</em> ${escHtml(query)}`;
-  //setLoading();
+  data.currentTab = null;
+  
   try {
-    const dataA = await apiFetch(`${api.search}${encodeURIComponent(query)}`);
-    console.log('Пошук результат', dataA);
+    filters.config = {
+      page: 1,
+      'f[search]=': query,
+    };
+    
+    api.active = `${api.catalog}?${new URLSearchParams(filters.config).toString()}`;
+    const dataA = await apiFetch(api.active);
+    
+    console.debug('Пошук результат', dataA);
     
     if (!dataA || dataA.length === 0) {
       html.loader.innerHTML = '<div class="empty"><div class="empty-icon">🔍</div><div class="empty-title">Нічого не знайдено </div><p>Попробуйте другий запит</p></div>';
     } else {
+      paginBtn.status = false;
       renderGrid(dataA);
     }
   } catch (e) {
     showError('Помилка пошуку: ' + e.message);
-    console.log('Помилка пошуку: ' + e.message);
+    console.error('Помилка пошуку: ' + e.message);
   }
 }

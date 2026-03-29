@@ -13,6 +13,10 @@ export const html = {
   searchInput: i('searchInput'),
   episodesGrid: i('episodesGrid'),
   videoPlayer: i('video-player'),
+  franchisesGrid: i('franchises-grid'),
+  similarGrid: i('similar-grid'),
+  membersGrid: i('members-grid'),
+  
   modalTitle: i('title'),
   modalPoster: i('anime-poster-img'),
   modalBadges: i('badges'),
@@ -32,7 +36,12 @@ export const html = {
   menuBtnLine: c('menu-btn__line'),
   cMenuBtn: c('menu__btn'),
   allPage: c('page'),
+  
   animeCardImg: c('anime-card__poster'),
+  animeFranchisesImg: c('anime-franchises__poster'),
+  animeSimilarImg: c('anime-similar__poster'),
+  animeMemberImg: c('anime-member__img'),
+  
   //animeCardImg: ac('anime-card__poster'),
   genreImg: c('genre__img'),
   wrapFilterBtn: c('wrap-filter-btn'),
@@ -54,7 +63,8 @@ export const api = {
   API: 'https://aniliberty.top/api/v1/anime/releases/latest',
   imgApi: 'https://static-libria.weekstorm.us',
   episodeApi: 'https://aniliberty.top/api/v1/anime/releases/episodes/',
-  search: 'https://aniliberty.top/api/v1/app/search/releases?query=',
+  //search: 'https://aniliberty.top/api/v1/app/search/releases?query=',
+  //search: 'https://anilibria.top/api/v1/anime/catalog/releases?f[search]=',
   
   
   randomGenres: 'https://aniliberty.top/api/v1/anime/genres/random',
@@ -64,12 +74,15 @@ export const api = {
   scheduleWeek: 'https://aniliberty.top/api/v1/anime/schedule/week',
   
   //anime: 'https://anilibria.top/api/v1/anime/releases/list?ids=9951,9433,5692&aliases=darling-in-the-franxx&page=1&limit=10&include=id,type.genres&exclude=poster,description',
-  anime: 'https://anilibria.top/api/v1/anime/releases/list?ids=',
+  animeId: 'https://anilibria.top/api/v1/anime/releases/list?ids=',
   
   catalog: 'https://anilibria.top/api/v1/anime/catalog/releases',
-  //catalog: 'https://anilibria.top/api/v1/doramy/catalog/releases',
+  franchises: 'https://anilibria.top/api/v1/anime/franchises/release/',
+  
   filterTotal: 'https://anilibria.top/api/v1/anime/catalog/releases?limit=10&page=1&f[genres]=15,20&f[types]=TV,WEB&f[years][from_year]=2016&f[years][to_year]=2020&f[sorting]=RATING_DESC',
+  
   active: 'https://anilibria.top/api/v1/anime/catalog/releases',
+  activeSimilar: 'https://anilibria.top/api/v1/anime/catalog/releases',
 };
 
 
@@ -87,9 +100,8 @@ export const vData = {
 //data
 export const data = {
   page: null,
-  //currentTab: null,
   btnFiltersActive: null,
-  //search: false,
+  currentTab: null,
   
   scheduleNow: {},
 };

@@ -4,8 +4,10 @@ import {apiFetch} from './mainLogic.js';
 import {renderGrid, renderGenresGrid, paginBtn} from './renderAnimeLists.js';
 
 // --- Filters ---
-export let filters = {
-  page: 1,
+export const filters = {
+  config: {
+    page: 1,
+  },
 };
 
 
@@ -21,7 +23,7 @@ export async function loadTab(tab) {
   
   try {
     paginBtn.status = false;
-    filters = {page: 1};
+    filters.config = {page: 1};
     
     //загальні
     if (tab === 'main') {
@@ -105,46 +107,51 @@ export async function anineFilter(dataType, data, name) {
     console.log('значення', data);
     
     paginBtn.status = false;
-    filters = {page: 1};
+    filters.config = {page: 1};
     
     
     //filter
     if (dataType == 'years') {
       html.sectionTitle.innerHTML = `<em>Фільтр</em> рік ${data}`;
-      filters['f[years][from_year]'] = data;
-      filters['f[years][to_year]'] = data;
+      filters.config['f[years][from_year]'] = data;
+      filters.config['f[years][to_year]'] = data;
     } 
     else if (dataType == 'types') {
       html.sectionTitle.innerHTML = `<em>Фільтр</em> тип ${name}`;
-      filters['f[types]'] = data;
+      filters.config['f[types]'] = data;
     }
     else if (dataType == 'genres') {
       html.sectionTitle.innerHTML = `<em>Фільтр</em> жанр ${name}`;
-      filters['f[genres]'] = data;
+      filters.config['f[genres]'] = data;
     }
     else if (dataType == 'seasons') {
       html.sectionTitle.innerHTML = `<em>Фільтр</em> сезон ${name}`;
-      filters['f[seasons]'] = data;
+      filters.config['f[seasons]'] = data;
     }
     else if (dataType == 'ageRatings') {
       html.sectionTitle.innerHTML = `<em>Фільтр</em> віковий рейтинг ${name}`;
-      filters['f[age_ratings]'] = data;
+      filters.config['f[age_ratings]'] = data;
     }
     else if (dataType == 'ongoings') {
       html.sectionTitle.innerHTML = `<em>Фільтр</em> онгоїнг статус ${name}`;
-      filters['f[publish_statuses]'] = data;
+      filters.config['f[publish_statuses]'] = data;
     }
     else if (dataType == 'productions') {
       html.sectionTitle.innerHTML = `<em>Фільтр</em> випуск статус ${name}`;
-      filters['f[production_statuses]'] = data;
+      filters.config['f[production_statuses]'] = data;
     }
     else if (dataType == 'generals') {
       html.sectionTitle.innerHTML = `<em>Фільтр</em> загальне ${name}`;
-      filters['f[sorting]'] = data;
+      filters.config['f[sorting]'] = data;
     }
+    /*//search
+    else if (dataType == 'search') {
+      html.sectionTitle.innerHTML = `<em>Фільтр</em> загальне ${name}`;
+      filters['f[search]'] = data;
+    }*/
     
     
-    api.active = `${api.catalog}?${new URLSearchParams(filters).toString()}`;
+    api.active = `${api.catalog}?${new URLSearchParams(filters.config).toString()}`;
     const result = await apiFetch(api.active);
     console.log('Фільтер результат:', result);
     renderGrid(result);
