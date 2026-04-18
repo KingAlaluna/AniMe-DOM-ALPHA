@@ -12,56 +12,41 @@ html.menuBtn.addEventListener('click', () => {
   html.menuBtn.classList.toggle('active');
 });
 
+
 html.cMenuBtn.forEach(e => {
   e.addEventListener('click', () => {
-    const data2 = e.dataset.filter;
-    const dataList = e.dataset.filterList;
-    const dataType = e.dataset.type;
-    
-    if (data2) {
-      data.btnFiltersActive = e;
-    }
-    
-    if (!dataList) {
-      html.cMenuBtn.forEach(e => {
-        const data3 = e.dataset.filter;
-        if (data3 && data.btnFiltersActive.dataset.filter != e.dataset.filter) {
-          e.classList.remove('active');
-        }
-      });
-    } else {
-      e.classList.toggle('active');
-    }
-    
-    
-    if (!e.classList.contains('active') && !dataList) {
-      html.cMenuBtn.forEach(e => {
-        const data3 = e.dataset.filter;
-        if (data2 == data3) {
-          e.classList.toggle('active');
-        }
-      });
-    }
-    
-    if (data2 && data.currentTab != data2 && !dataType) {
-      if (data2 != 'main') {
-        router.navigate(`/${data2}`);
-      } else {
-        router.navigate(`/`);
-      }
-    } 
-    
-    if (data2 && data.currentTab != data2 && dataType) {
-      //anineFilter(dataType, data2);
-      router.navigate(`/filters/${dataType}/${data2}`);
-      console.log('Клік на кнопку фільтру!', e.textContent);
-    }
-    
-    if (dataList) {
-      loadTab(dataList);
-    }
+    btnActive(e);
   });
 });
+
+
+function btnActive(e) {
+  const dataFilter = e.dataset.filter;
+  const dataList = e.dataset.filterList;
+  const dataType = e.dataset.type;
+  
+  
+  if (dataList) {
+    e.classList.toggle('active');
+  }
+  
+  if (dataFilter && data.currentTab != dataFilter && !dataType) {
+    if (dataFilter != 'main') {
+      router.navigate(`/${dataFilter}`);
+    } else {
+      router.navigate(`/`);
+    }
+  } 
+  
+  if (dataFilter && data.currentTab != dataFilter && dataType) {
+    router.navigate(`/filters/${dataType}/${dataFilter}`);
+    console.log('Клік на кнопку фільтру!', e.textContent);
+  }
+  
+  if (dataList) {
+    loadTab(dataList);
+  }
+}
 
 
 //modal menu

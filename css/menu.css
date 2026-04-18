@@ -65,7 +65,7 @@
   right: -250px;
   height: calc(100% - 64px);
   width: 250px;
-  background: #0a0a0fcc;
+  background: var(--blur-bg-color);
   backdrop-filter: blur(20px);
   z-index: 10;
   transition: 0.2s ease;
@@ -90,6 +90,31 @@
     &.active {
       border-color: var(--accent);
       box-shadow: 0 0 0 3px var(--glow);
+    }
+    
+    &.theme {
+      text-transform: uppercase;
+      
+      .light {
+        color: var(--accent);
+      }
+      
+      .dark {
+        color: var(--text);
+      }
+      
+      &.active {
+        border: var(--border);
+        box-shadow: none;
+        
+        .light {
+          color: var(--text);
+        }
+        
+        .dark {
+          color: var(--accent);
+        }
+      }
     }
   }
   

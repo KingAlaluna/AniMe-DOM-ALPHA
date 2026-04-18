@@ -205,7 +205,7 @@ export async function renderGenresGrid(list) {
     //console.log('Відповідь сервера:', a);
     
     const card = document.createElement('div');
-    card.className = 'anime-card';
+    card.className = 'anime-card genre-card';
     card.style.animationDelay = `${idx * 0.03}s`;
     
     /*card.onclick = () => {

@@ -9,6 +9,7 @@ export const html = {
   mainPage: i('main-page'),
   animeViewing: i('anime-viewing'),
   
+  themeBtn: i('theme-btn'),
   
   searchInput: i('searchInput'),
   episodesGrid: i('episodesGrid'),
@@ -53,7 +54,7 @@ export const html = {
   
   //tags
   body: document.body,
-  html: document,
+  html: document.documentElement,
 };
 
 
@@ -100,7 +101,6 @@ export const vData = {
 //data
 export const data = {
   page: null,
-  btnFiltersActive: null,
   currentTab: null,
   
   scheduleNow: {},

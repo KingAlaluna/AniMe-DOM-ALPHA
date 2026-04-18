@@ -50,7 +50,7 @@ export async function openTitle(animeId) {
     
     a.genres?.forEach(e => {
       const genre = document.createElement('div');
-      genre.className = 'genres-panel__genre';
+      genre.className = 'genre-card';
       
       //const poster = api.imgApi + e.image.optimized.preview;
       const poster = api.imgApi + e.image.optimized.thumbnail;
@@ -386,7 +386,7 @@ async function animeMembers(members) {
 async function renderMembersGrid(list) {
   list.forEach((m, idx) => {
     const card = document.createElement('div');
-    card.className = 'anime-card';
+    card.className = 'anime-card member-card';
     card.style.animationDelay = `${idx * 0.03}s`;
     
     

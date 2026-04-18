@@ -9,8 +9,10 @@ import {loadTab, anineFilter} from './filterAnime.js';
 import {searchAnime} from './searchAnime.js';
 
 //no critical
-import './menu.js';
+import /*{btnActive} from*/ './menu.js';
 import './renderAnimeLists.js';
+import '../../sw-init.js';
+import './theme.js';
 
 
 // --- NAV ---
@@ -72,6 +74,41 @@ async function scheduleNow(type) {
 }
 
 
+function btnActive(match) {
+  const name = match.route.handler.name;
+  const type = match.data?.type;
+  const value = match.data?.value;
+  
+  
+  html.cMenuBtn.forEach(e => {
+    const dataType = e.dataset.type;
+    const dataFilter = e.dataset.filter;
+    
+    if (dataFilter && dataFilter != match.url) {
+      e.classList.remove('active');
+    }
+    
+    if (name == '/') {
+      if (dataFilter == 'main') {
+        e.classList.add('active');
+      }
+    }
+    
+    
+    if (dataFilter == match.url) {
+      e.classList.add('active');
+    }
+    
+    if (name == '/filters/:type/:value') {
+      if (type && value && dataType == type && dataFilter == value) {
+        e.classList.add('active');
+      }
+    }
+  });
+}
+
+
+
 
 //
 //router
@@ -83,6 +120,8 @@ export const router = new NavigoLib.default(root, { hash: true });
 router.hooks({
   after: (match) => {
     videoConfigStart();
+    btnActive(match);
+    console.log('after match', match);
   }
 });
 

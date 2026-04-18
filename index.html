@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="dark">
+<html lang="ru" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -12,14 +12,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;700;900&family=Noto+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
   
   <!--style-->
-  <link rel="stylesheet" href="css/light-theme.css">
-  <link rel="stylesheet" href="css/dark-theme.css">
+  <link rel="stylesheet" href="css/themes/general.css">
+  <link rel="stylesheet" href="css/themes/light.css">
+  <link rel="stylesheet" href="css/themes/dark.css">
   
+  <link rel="stylesheet" href="css/utils.css">
   <link rel="stylesheet" href="css/templates.css">
   <link rel="stylesheet" href="css/main-style.css">
   <link rel="stylesheet" href="css/main-banner.css">
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/root.css">
+  <link rel="stylesheet" href="css/footer-copy.css">
   
   <!--page-->
   <link rel="stylesheet" href="css/page/main.css">
@@ -38,9 +41,9 @@
     <h1>AniMe</h1>
   </div>
 
-  <div class="search-wrap">
-    <input type="text" id="searchInput" placeholder="Пошук аніме..." autocomplete="off" />
-  </div>
+  <!--<div class="search-wrap">-->
+    <input type="text" id="searchInput" placeholder="&#8981; Пошук аніме..." autocomplete="off" />
+ <!-- </div>-->
 
   <nav class="nav-panel">
     <div class="nav-panel__panel panel-1">
@@ -77,9 +80,11 @@
 
 
 <!--root-->
-<main class="root">
+<div class="root">
+<main class="main">
   <!--menu navigation-->
   <nav class="menu" id="menu">
+    <button class="menu__btn theme" id="theme-btn">Тема: <span class="light">Світла</span> / <span class="dark">Темна</span></button>
     <button class="menu__btn active" data-filter="main">Головна</button>
     <button class="menu__btn" data-filter="updates">Новинки</button>
     
@@ -251,25 +256,91 @@
       
     </div>
   </div>
-  
 </main>
+
+
+<!--footer-->
+<footer class="footer-copy-wrap">
+  <div class="logo-wrap">
+    <img class="logo" src="img/my-logo/logo.svg" alt="Моє лого">
+    <img class="logo" src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" alt="Лого GitHub">
+    <img class="logo mit" src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="Знак ліцензії MIT">
+  </div>
+  
+  <br>
+  <strong>Всі мої (завершені) проєкти розміщені на GitHub під ліцензією MIT.</strong>
+  <br>
+  <h3>PortfolioHub</h3>
+  <p>PortfolioHub — збірка всіх моїх проєктів з детальним описом технологій реалізації та відмінностей, посиланнями на проєкти та вихідний код. А також детальна інформація про мене як програміста, опис моїх навичок, мої контакти. Найбільш корисно для IT роботодавців та інших людей пов'язаних з IT.</p>
+  <a href="https://kingalaluna.github.io/PortfolioHub/">Перейти на PortfolioHub</a>
+  <a href="https://github.com/KingAlaluna/PortfolioHub.git">Глянути вихідний код</a>
+  
+  
+  <h3>Коротка інформація та посилання на інші мої проєкти:</h3>
+  
+  <section class="wrap-my-project">
+    <h2>Інші сайти:</h2>
+    
+    <ul>
+      <li>
+        <h3>AnimePotik-SPA (аніме)</h3>
+        <a href="https://kingalaluna.github.io/AnimePotik-SPA/">Перейти на AnimePotik-SPA</a>
+        <a href="https://github.com/KingAlaluna/AnimePotik-SPA.git">Глянути вихідний код</a>
+      </li>
+      <li>
+        <h3>AnimePotik-MPA (аніме)</h3>
+        <a href="https://kingalaluna.github.io/AnimePotik-MPA/">Перейти на AnimePotik-MPA</a>
+        <a href="https://github.com/KingAlaluna/AnimePotik-MPA.git">Глянути вихідний код</a>
+      </li>
+      <li>
+        <h3>AnimeHub-MPA (аніме)</h3>
+        <a href="https://kingalaluna.github.io/AnimeHub-MPA/">Перейти на AnimeHub-MPA</a>
+        <a href="https://github.com/KingAlaluna/AnimeHub-MPA.git">Глянути вихідний код</a>
+      </li>
+      <li>
+        <h3>AnimeHub-SPA (аніме)</h3>
+        <a href="https://kingalaluna.github.io/AnimeHub-SPA/">Перейти на AnimeHub-SPA</a>
+        <a href="https://github.com/KingAlaluna/AnimeHub-SPA.git">Глянути вихідний код</a>
+      </li>
+    </ul>
+  </section>
+  
+  <section class="wrap-my-project">
+    <h2>Ігри:</h2>
+    
+    <ul>
+      <li>
+        <h3>Flappy UFO-DOM</h3>
+        <a href="https://kingalaluna.github.io/Flappy-UFO-DOM/">Перейти на Flappy UFO-DOM</a>
+        <a href="https://github.com/KingAlaluna/Flappy-UFO-DOM.git">Глянути вихідний код</a>
+      </li>
+      <li>
+        <h3>Dino-DOM</h3>
+        <a href="https://kingalaluna.github.io/Dino-DOM/">Перейти на Dino-DOM</a>
+        <a href="https://github.com/KingAlaluna/Dino-DOM.git">Глянути вихідний код</a>
+      </li>
+    </ul>
+  </section>
+  
+  
+  <h2>Мої контакти:</h2>
+  <h3>Вам потрібно зробити сайт чи хочете запропонувати вакансію? Напишіть мені!</h3>
+  <address class="my-contacts-wrap">
+    <a href="https://t.me/Viktor_2352" target="_blank" rel="noopener noreferrer">
+      <img class="logo" src="img/not-my-logo/telegram.svg" alt="Лого Telegram">
+    </a>
+  </address>
+  <div class="copy-wrap">
+    <img class="logo" src="img/my-logo/logo.svg" alt="Моє лого">
+    <span>&copy; AniMe 2026 | v1.1.0-alpha.1 (DOM).</span>
+  </div>
+</footer>
+
+</div>
 
 
 <!--logic-->
 <script type="module" src="js/logic/mainLogic.js"></script>
-
-<!--sw.js-->
-<script>
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', async () => {
-      try {
-        const reg = await navigator.serviceWorker.register('sw.js');
-      } catch (err) {
-        console.error('Помилка SW:', err);
-      }
-    });
-  }
-</script>
 
 </body>
 </html>
