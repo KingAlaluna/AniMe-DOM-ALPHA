@@ -1,7 +1,7 @@
 import {html, api, c, vData} from '../data/config.js';
-import {escHtml, router, apiFetch} from './mainLogic.js';
-import {filters} from './filterAnime.js';
-import {videoConfigStart} from './page/animeViewing.js';
+import {escHtml, router, apiFetch} from './main-logic.js';
+import {filters} from './filter-anime.js';
+import {videoConfigStart} from './page/anime-view.js';
 
 export const paginBtn = {
   status: false,
@@ -14,7 +14,6 @@ export async function renderGrid(list) {
     html.loader.innerHTML = '<div class="empty"><div class="empty-icon">🎬</div><div class="empty-title">Пусто</div></div>';
     return;
   }
-  //console.log('Ответ сервера:', list[0]);
   videoConfigStart();
   
   
@@ -22,10 +21,8 @@ export async function renderGrid(list) {
   grid.className = 'anime-grid';
   
   const animeArray = list.data ? list.data : list;
-  console.log('Ответ сервера:', animeArray[0]);
   
   animeArray.forEach((anime, idx) => {
-    //console.log('Ответ сервера:', a);
     const a = anime.release ? anime.release : anime;
     
     const card = document.createElement('div');
@@ -51,11 +48,11 @@ export async function renderGrid(list) {
       <div class="anime-card__body">
         <div class="anime-card__title">${escHtml(name)}</div>
         <div class="anime-card__meta">
-          ${year ? `<span class="badge">${year}</span>` : ''}
-          ${rating ? `<span class="badge badge--accent">${rating}</span>` : ''}
-          ${type ? `<span class="badge badge--accent">${type}</span>` : ''}
-          ${eps ? `<span class="badge badge--accent">${eps} еп.</span>` : ''}
-          ${genres ? `<span class="badge badge--accent">${genres}</span>` : ''}
+          ${year ? `<span class="anime-info-text">${year}</span>` : ''}
+          ${rating ? `<span class="anime-info-text accent">${rating}</span>` : ''}
+          ${type ? `<span class="anime-info-text accent">${type}</span>` : ''}
+          ${eps ? `<span class="anime-info-text accent">${eps} еп.</span>` : ''}
+          ${genres ? `<span class="anime-info-text accent">${genres}</span>` : ''}
           
         </div>
       </div>
@@ -82,30 +79,24 @@ export async function renderGrid(list) {
   });
   
   
-  //пагінація
-  if (!paginBtn.status) {
-    const pagesStatus = list?.meta?.pagination?.total_pages;
-    const checkPagesTotal = pagesStatus ? pagesStatus : 1;
-    const pagesTotal = Number(checkPagesTotal);
-    paginBtnRender(pagesTotal, pagesStatus ? true : false);
-    console.log('СТОРІНОК:' + pagesTotal);
-  }
+  //pagination
+  paginCheck(list);
 }
 
 
 
 //
-//пагінація
+//pagination
 //
-//шаблон
+//template
 class PaginBtn {
   constructor(page) {
-    this.btn = `<button class="btn-number pagin-btn ${page == 1 ? 'active' : ''}" data-page="${page}">${page}</button>`;
+    this.btn = `<button class="btn-number pagin-btn ${page == 1 ? 'active' : ''}" aria-label="Пагінація, сторінка ${page}" data-page="${page}">${page}</button>`;
   }
 }
 
 
-//логіка 
+//logic 
 function paginBtnRender(pagesTotal, pagesTotalStatus) {
   paginBtn.status = true;
   
@@ -133,7 +124,7 @@ function paginBtnRender(pagesTotal, pagesTotalStatus) {
   
   html.pagin.innerHTML = `
     ${btnPaginLeft}
-    ${(pagesTotal / 2) > 8 ? '<input class="btn-number pagin-btn" type="number" placeholder="Сторінка" />' : ''}
+    ${(pagesTotal / 2) > 8 ? '<input class="btn-number pagin-btn" aria-label="Пагінація, введіть сторінку" type="number" placeholder="Сторінка" />' : ''}
     ${btnPaginRight}
   `;
   
@@ -159,13 +150,11 @@ function paginBtnRender(pagesTotal, pagesTotalStatus) {
             api.active = `${api.catalog}?${new URLSearchParams(filters.config).toString()}`;
             const newAnimes = await apiFetch(`${api.active}`);
             renderGrid(newAnimes);
-            console.log('КЛІК НА КНОПКУ ПАГІНАЦІЇ!');
           }
         }
         if (ev == 'keydown' && en.key == 'Enter') {
           const page = e.dataset.page;
           if (!page) {
-            console.log('КЛІК НА ЕНТЕР ПАГІНАЦІЇ!');
             if (e.value > 0 && e.value <= pagesTotal) {
               filters.config.page = e.value;
               api.active = `${api.catalog}?${new URLSearchParams(filters.config).toString()}`;
@@ -188,6 +177,16 @@ function paginBtnRender(pagesTotal, pagesTotalStatus) {
 }
 
 
+function paginCheck(list) {
+  if (!paginBtn.status) {
+    const pagesStatus = list?.meta?.pagination?.total_pages;
+    const checkPagesTotal = pagesStatus ? pagesStatus : 1;
+    const pagesTotal = Number(checkPagesTotal);
+    paginBtnRender(pagesTotal, pagesStatus ? true : false);
+  }
+}
+
+
 
 //рендер жанрів
 export async function renderGenresGrid(list) {
@@ -202,17 +201,10 @@ export async function renderGenresGrid(list) {
   grid.className = 'anime-grid';
   
   list.forEach((a, idx) => {
-    //console.log('Відповідь сервера:', a);
-    
     const card = document.createElement('div');
     card.className = 'anime-card genre-card';
     card.style.animationDelay = `${idx * 0.03}s`;
     
-    /*card.onclick = () => {
-      html.animeViewing.style.display = 'flex';
-      html.mainPage.style.display = 'none';
-      openTitle(a);
-    };*/
     
     const poster = `${api.imgApi + a.image.optimized.thumbnail}`;
     const name = a.name;
@@ -244,5 +236,9 @@ export async function renderGenresGrid(list) {
       };
     };
   });
+  
+  
+  //pagination
+  paginCheck(list);
 }
 

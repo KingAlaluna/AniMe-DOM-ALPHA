@@ -1,43 +1,32 @@
 :root {
-  --bg: hsla(240, 19%, 95%, 1);
-  --surface: hsla(240, 17%, 92%, 1);
-  --card: hsla(240, 17%, 90%, 1);
-  --border: 1px solid hsla(0, 0%, 0%, 0.06);
+  --card-active-box-shadow: 0 16px 40px hsla(288, 100%, 65%, 0.1), 0 4px 16px hsla(0, 0%, 0%, 0.3);
+  
   --accent: hsla(292, 100%, 35%, 1);
   --accent2: hsla(260, 100%, 39%, 1);
-  --text: hsla(247, 100%, 3%, 1);
+  --text: hsla(247, 10%, 10%, 1);
   --muted: hsla(252, 19%, 42%, 1);
   --glow: hsla(292, 100%, 35%, 0.2);
+  --border: 1px solid hsla(200, 10%, 75%, 1);
+  --footer-copy-txt: hsla(240, 10%, 40%, 1);
+  --footer-copy-logo-bg: hsla(200, 10%, 70%, 0.3);
   
-  --color-1: hsla(0, 100%, 0%, 0.5);
+  
   --blur-bg-color: hsla(240, 19%, 95%, 0.8);
   --main-bg-gradient: 
     radial-gradient(ellipse 60% 40% at 80% 10%, hsla(276, 100%, 80%, 0.2) 0%, transparent 60%),
     radial-gradient(ellipse 40% 30% at 10% 80%, hsla(255, 100%, 80%, 0.2) 0%, transparent 60%);
   
   --brightness: 90%;
-}
-
-
-
-:root {
-  /*palette colors*/
-  --gray-50: hsla(200, 10%, 95%, 1);
-  --gray-250: hsla(200, 10%, 70%, 1);
   
   
-  --border: 1px solid hsla(200, 10%, 75%, 1);
-  
-  --text: hsla(240, 10%, 10%, 1);
-  --footer-copy-txt: hsla(240, 10%, 40%, 1);
-  
-  --general-bg: hsla(200, 10%, 99%, 1);
-  --wrap-top-anime-bg: hsla(260, 10%, 99%, 1);
-  --footer-copy-logo-bg: hsla(200, 10%, 70%, 0.3);
-  
-  --logo-bg: linear-gradient(155deg, hsla(260, 100%, 30%, 1) 0%, hsla(300, 100%, 20%, 1) 100%);
-  
-  --theme-img: url(../img/style/light-theme.svg);
+  --input-placeholder-color: var(--black-a50);
+  --main-bg: var(--white-50);
+  --img-card-bg: var(--white-100);
+  --btn-number-bg: var(--white-150);
+  --anime-card-bg: var(--white-150);
+  --genre-card-bg: var(--white-150);
+  --input-search-bg: var(--white-150);
+  --menu-btn-bg: var(--white-150);
   
 }
 

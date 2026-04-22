@@ -2,7 +2,7 @@ import Hls from 'https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.mjs';
 import Plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.mjs';
 
 import {html, api, vData, data, c} from '../../data/config.js';
-import {apiFetch, escHtml, router} from '../mainLogic.js';
+import {apiFetch, escHtml, router} from '../main-logic.js';
 
 
 export function videoConfigStart() {
@@ -23,60 +23,60 @@ export async function openTitle(animeId) {
     const a = await d.data[0];
     const eps = a.episodes;
     
-    console.debug('Дивитись аніме', d);
     
-    
-    playEpisode(eps);
-    renderEpisodes(eps);
-    videoQuality(eps);
-    videoEpisode(eps);
+    if (eps[0]?.hls_480 || eps[0]?.hls_720 || eps[0]?.hls_1080) {
+      html.episodesGrid.classList.remove('no-episodes');
+      playEpisode(eps);
+      renderEpisodes(eps);
+      videoQuality(eps);
+      videoEpisode(eps);
+    } else {
+      html.episodesGrid.classList.add('no-episodes');
+      html.episodesGrid.innerHTML = '<strong>Нажаль, посилань на епізоди данного аніме не існує...</strong>';
+    }
     
     
     // poster
     const poster = api.imgApi + a.poster.optimized.src;
     
-    html.modalPoster.src = poster;
-    html.modalTitle.textContent = a.name.main;
-    html.titleEn.textContent = `(en: ${a.name.english})`;
+    html.animeViewAnimePoster.src = poster;
+    html.animeViewTitle.textContent = a.name.main;
+    html.animeViewTitleEn.textContent = `(en: ${a.name.english})`;
     
     // badges
     const year = a.year;
     const rating = a.age_rating.label;
     const type = a.type.description;
     const episode = a?.episodes_total ? a?.episodes_total : a?.latest_episode?.ordinal;
-    //const genres = anime.genres?.map(e => e.name).join(', ');
     
-    html.genresPanel.innerHTML = '';
+    html.animeViewGenresPanel.innerHTML = '';
     
     a.genres?.forEach(e => {
       const genre = document.createElement('div');
       genre.className = 'genre-card';
       
-      //const poster = api.imgApi + e.image.optimized.preview;
       const poster = api.imgApi + e.image.optimized.thumbnail;
       
       
       genre.innerHTML = `
         <img class="genre__img img-blur" src="${poster}" />
         <div class="genre__meta">
-          <span class="meta__text-genre badge--accent">${e.name}</span>
+          <span class="anime-info-text genre accent">${e.name}</span>
         </div>
       `;
       
-      html.genresPanel.appendChild(genre);
+      html.animeViewGenresPanel.appendChild(genre);
     });
     
-    //console.log(genres);
-    html.modalBadges.innerHTML = `
-      ${year ? `<span class="badge">${year}</span>` : ''}
-      ${rating ? `<span class="badge badge--accent">${rating}</span>` : ''}
-      ${type ? `<span class="badge badge--accent">${type}</span>` : ''}
-      ${episode ? `<span class="badge badge--accent">${episode} епізодів</span>` : ''}
+    html.animeViewInfoWrap.innerHTML = `
+      ${year ? `<span class="anime-info-text">${year}</span>` : ''}
+      ${rating ? `<span class="anime-info-text accent">${rating}</span>` : ''}
+      ${type ? `<span class="anime-info-text accent">${type}</span>` : ''}
+      ${episode ? `<span class="anime-info-text accent">${episode} епізодів</span>` : ''}
     `;
-    //${genres ? `<span class="badge badge--accent">${genres}</span>` : ''}
     
     
-    html.description.textContent = a.description || '';
+    html.animeViewDescription.textContent = a.description || '';
     
     
     html.genreImg = c('genre__img');
@@ -97,16 +97,17 @@ export async function openTitle(animeId) {
     const totalGenresName = a.genres.map(e => e.id).join(',');
     similarAnime(totalGenresName);
     animeMembers(a.members);
+    
+    if (!data.descriptionActive) {
+      data.descriptionActive = true;
+      html.animeViewDescription.addEventListener('click', () => {
+        html.animeViewDescription.classList.toggle('active');
+      });
+    }
   } catch (e) {
-    //showError('Помилка завантаження тайтла: ' + e.message);
-    console.log('Помилка завантаження тайтла: ' + e.message);
+    console.error('Помилка завантаження тайтла: ' + e);
   }
 }
-
-html.description.addEventListener('click', () => {
-  html.description.classList.toggle('active');
-});
-
 
 
 
@@ -133,9 +134,12 @@ function videoQuality(url) {
 function playEpisode(ep) {
   const url = ep[vData.episode]['hls_' + vData.quality];
   
+  if (!url) {
+    return;
+  }
+  
   if (vData.hls) {
     vData.hls.destroy(); 
-    console.log('Старий потік знищено');
   }
   
   if (Hls.isSupported()) {
@@ -143,10 +147,8 @@ function playEpisode(ep) {
     
     vData.hls.loadSource(url);
     vData.hls.attachMedia(html.videoPlayer);
-    console.log('hls бібліотека успіх!');
   } else {
     html.videoPlayer.src = url;
-    console.log('hls працює без бібліотеки!');
   }
 }
 
@@ -170,7 +172,6 @@ function videoEpisode(url) {
       });
       
       e.classList.add('active');
-      //console.log('клік на епізод');
       
       const episode = e.dataset.episode;
       vData.episode = episode;
@@ -187,15 +188,15 @@ function videoEpisode(url) {
 async function animeFranchises(animeId) {
   try {
     const animes = await apiFetch(api.franchises + animeId);
-    console.debug('Франшизи дані', animes);
     const releases = await animes[0]?.franchise_releases;
-    console.debug('Франшизи реліз', releases);
     
     html.franchisesGrid.innerHTML = '';
     if (releases) {
+      html.franchisesGrid.classList.remove('no-grid');
       renderFranchisesGrid(releases);
     } else {
-      html.franchisesGrid.innerHTML = 'Нажаль, в даного аніме франшизи відсутні...';
+      html.franchisesGrid.classList.add('no-grid');
+      html.franchisesGrid.innerHTML = '<strong>Нажаль, в даного аніме франшизи відсутні...</strong>';
     }
   } catch (e) {
     console.error('Помилка завантаження франшиз', e.message);
@@ -209,13 +210,10 @@ async function renderFranchisesGrid(list) {
     html.loader.innerHTML = '<div class="empty"><div class="empty-icon">🎬</div><div class="empty-title">Пусто</div></div>';
     return;
   }
-  //console.log('Ответ сервера:', list[0]);
   
   const animeArray = list.data ? list.data : list;
-  console.log('Ответ сервера:', animeArray[0]);
   
   animeArray.forEach((anime, idx) => {
-    //console.log('Ответ сервера:', a);
     const a = anime.release ? anime.release : anime;
     
     const card = document.createElement('div');
@@ -241,11 +239,11 @@ async function renderFranchisesGrid(list) {
       <div class="anime-card__body">
         <div class="anime-card__title">${escHtml(name)}</div>
         <div class="anime-card__meta">
-          ${year ? `<span class="badge">${year}</span>` : ''}
-          ${rating ? `<span class="badge badge--accent">${rating}</span>` : ''}
-          ${type ? `<span class="badge badge--accent">${type}</span>` : ''}
-          ${eps ? `<span class="badge badge--accent">${eps} еп.</span>` : ''}
-          ${genres ? `<span class="badge badge--accent">${genres}</span>` : ''}
+          ${year ? `<span class="anime-info-text">${year}</span>` : ''}
+          ${rating ? `<span class="anime-info-text accent">${rating}</span>` : ''}
+          ${type ? `<span class="anime-info-text accent">${type}</span>` : ''}
+          ${eps ? `<span class="anime-info-text accent">${eps} еп.</span>` : ''}
+          ${genres ? `<span class="anime-info-text accent">${genres}</span>` : ''}
           
         </div>
       </div>
@@ -277,15 +275,15 @@ async function renderFranchisesGrid(list) {
 //
 async function similarAnime(genres) {
   try {
-    console.debug('похожі аніме жанри', genres);
     const animes = await apiFetch(`${api.activeSimilar}?f[genres]=${genres}`);
-    console.debug('похожі аніме сервер', animes);
     
     html.similarGrid.innerHTML = '';
     if (animes.data.length > 0) {
+      html.similarGrid.classList.remove('no-grid');
       renderSimilarGrid(animes);
     } else {
-      html.similarGrid.innerHTML = 'Нажаль, аніме похожі за жанрами відсутні...';
+      html.similarGrid.classList.add('no-grid');
+      html.similarGrid.innerHTML = '<strong>Нажаль, аніме похожі за жанрами відсутні...</strong>';
     }
   } catch (e) {
     console.error('Помилка similarAnime', e.message);
@@ -300,13 +298,10 @@ async function renderSimilarGrid(list) {
     html.loader.innerHTML = '<div class="empty"><div class="empty-icon">🎬</div><div class="empty-title">Пусто</div></div>';
     return;
   }
-  //console.log('Ответ сервера:', list[0]);
   
   const animeArray = list.data ? list.data : list;
-  console.log('Ответ сервера:', animeArray[0]);
   
   animeArray.forEach((anime, idx) => {
-    //console.log('Ответ сервера:', a);
     const a = anime.release ? anime.release : anime;
     
     const card = document.createElement('div');
@@ -332,11 +327,11 @@ async function renderSimilarGrid(list) {
       <div class="anime-card__body">
         <div class="anime-card__title">${escHtml(name)}</div>
         <div class="anime-card__meta">
-          ${year ? `<span class="badge">${year}</span>` : ''}
-          ${rating ? `<span class="badge badge--accent">${rating}</span>` : ''}
-          ${type ? `<span class="badge badge--accent">${type}</span>` : ''}
-          ${eps ? `<span class="badge badge--accent">${eps} еп.</span>` : ''}
-          ${genres ? `<span class="badge badge--accent">${genres}</span>` : ''}
+          ${year ? `<span class="anime-info-text">${year}</span>` : ''}
+          ${rating ? `<span class="anime-info-text accent">${rating}</span>` : ''}
+          ${type ? `<span class="anime-info-text accent">${type}</span>` : ''}
+          ${eps ? `<span class="anime-info-text accent">${eps} еп.</span>` : ''}
+          ${genres ? `<span class="anime-info-text accent">${genres}</span>` : ''}
           
         </div>
       </div>
@@ -368,13 +363,13 @@ async function renderSimilarGrid(list) {
 //
 async function animeMembers(members) {
   try {
-    console.log('members', members);
-    
     html.membersGrid.innerHTML = '';
     if (members.length > 0) {
+      html.membersGrid.classList.remove('no-grid');
       renderMembersGrid(members);
     } else {
-      html.membersGrid.innerHTML = 'Нажаль, акторів/актрис данного аніме не знайдено...';
+      html.membersGrid.classList.add('no-grid');
+      html.membersGrid.innerHTML = '<strong>Нажаль, акторів/актрис данного аніме не знайдено...</strong>';
     }
   } catch (e) {
     console.error('Помилка animeMembers', e.message);
@@ -399,12 +394,12 @@ async function renderMembersGrid(list) {
       ${avatar ? `
         <img class="anime-member__img img-blur" ${idx < 6 ? 'fetchpriority="high"' : ''} ${idx > 5 ? 'loading="lazy"' : ''} src="${avatar}" alt="${escHtml(name)}">
       ` : `
-        <div class="anime-no-img" style="background: ${bgColor}"></div>
+        <div class="anime-member__img anime-no-img" style="background: ${bgColor}"></div>
       `}
       <div class="anime-card__body">
         <div class="anime-card__title">${escHtml(name)}</div>
         <div class="anime-card__meta">
-          ${role ? `<span class="badge badge--accent">${role}</span>` : ''}
+          ${role ? `<span class="anime-info-text accent">${role}</span>` : ''}
         </div>
       </div>
     `;
@@ -417,13 +412,17 @@ async function renderMembersGrid(list) {
   
   html.animeMemberImg.forEach((e, idx) => {
     e.onload = () => {
-      const avatar = `${api.imgApi + (list[idx].user?.avatar?.optimized?.preview)}`;
-      const imgLoader = new Image();
-      imgLoader.src = avatar;
-      imgLoader.onload = () => {
-        e.src = avatar;
-        e.classList.remove('img-blur');
-      };
+      const avatar = list[idx].user?.avatar?.optimized?.preview;
+      
+      if (avatar) {
+        const img = `${api.imgApi + avatar}`;
+        const imgLoader = new Image();
+        imgLoader.src = img;
+        imgLoader.onload = () => {
+          e.src = img;
+          e.classList.remove('img-blur');
+        };
+      }
     };
   });
 }

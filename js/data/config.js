@@ -1,54 +1,59 @@
 //html element
-const i = (id) => document.getElementById(id);
+export const i = (id) => document.getElementById(id);
 export const c = (classis) => document.querySelectorAll(`.${classis}`);
 const ac = (autoClassis) => document.getElementsByClassName(autoClassis);
 
 
 export const html = {
-  //page
-  mainPage: i('main-page'),
-  animeViewing: i('anime-viewing'),
+  tagMain: i('tag-main'),
+  templatesPages: c('templates-pages'),
   
-  themeBtn: i('theme-btn'),
+  //main page
+  pagin: i('pagin'),
+  loader: i('loader'),
+  sectionTitle: i('section-title'),
   
-  searchInput: i('searchInput'),
-  episodesGrid: i('episodesGrid'),
+  
+  //page anime view
+  animeViewAnimePoster: i('anime-view-anime-poster'),
+  animeViewTitle: i('anime-view-title'),
+  animeViewInfoWrap: i('anime-view-info-wrap'),
+  animeViewDescription: i('anime-view-description'),
+  animeViewTitleEn: i('anime-view-title-en'),
+  animeViewGenresPanel: i('anime-view-genres-panel'),
+  episodesGrid: i('episodes-grid'),
   videoPlayer: i('video-player'),
   franchisesGrid: i('franchises-grid'),
   similarGrid: i('similar-grid'),
   membersGrid: i('members-grid'),
   
-  modalTitle: i('title'),
-  modalPoster: i('anime-poster-img'),
-  modalBadges: i('badges'),
-  description: i('description'),
-  sectionTitle: i('sectionTitle'),
-  errorBox: i('errorBox'),
+  
+  //general
+  themeBtn: i('theme-btn'),
+  searchInput: i('search-input'),
+  allPage: c('page'),
+  
+  
+  //menu
   menuBtn: i('menu-btn'),
   menu: i('menu'),
   modalMenu: i('modal-menu'),
   menuBtnDetails: i('menu-btn-details'),
-  loader: i('loader'),
-  titleEn: i('title-en'),
-  genresPanel: i('genres-panel'),
-  
-  episodeBtn: c('episode-btn'),
-  tabBtn: c('tab-btn'),
   menuBtnLine: c('menu-btn__line'),
   cMenuBtn: c('menu__btn'),
-  allPage: c('page'),
+  wrapFilterBtn: c('wrap-filter-btn'),
   
+  
+  //anime view
+  episodeBtn: c('episode-btn'),
   animeCardImg: c('anime-card__poster'),
   animeFranchisesImg: c('anime-franchises__poster'),
   animeSimilarImg: c('anime-similar__poster'),
   animeMemberImg: c('anime-member__img'),
-  
-  //animeCardImg: ac('anime-card__poster'),
   genreImg: c('genre__img'),
-  wrapFilterBtn: c('wrap-filter-btn'),
   
-  //пагинация
-  pagin: i('pagin'),
+  
+  //pagination
   paginBtn: c('pagin-btn'),
   
   
@@ -64,8 +69,6 @@ export const api = {
   API: 'https://aniliberty.top/api/v1/anime/releases/latest',
   imgApi: 'https://static-libria.weekstorm.us',
   episodeApi: 'https://aniliberty.top/api/v1/anime/releases/episodes/',
-  //search: 'https://aniliberty.top/api/v1/app/search/releases?query=',
-  //search: 'https://anilibria.top/api/v1/anime/catalog/releases?f[search]=',
   
   
   randomGenres: 'https://aniliberty.top/api/v1/anime/genres/random',
@@ -74,7 +77,6 @@ export const api = {
   scheduleNow: 'https://aniliberty.top/api/v1/anime/schedule/now',
   scheduleWeek: 'https://aniliberty.top/api/v1/anime/schedule/week',
   
-  //anime: 'https://anilibria.top/api/v1/anime/releases/list?ids=9951,9433,5692&aliases=darling-in-the-franxx&page=1&limit=10&include=id,type.genres&exclude=poster,description',
   animeId: 'https://anilibria.top/api/v1/anime/releases/list?ids=',
   
   catalog: 'https://anilibria.top/api/v1/anime/catalog/releases',
@@ -102,6 +104,7 @@ export const vData = {
 export const data = {
   page: null,
   currentTab: null,
+  descriptionActive: false,
   
   scheduleNow: {},
 };

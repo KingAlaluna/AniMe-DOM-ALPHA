@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AniMe — дивитись аніме</title>
+  <title>AniMe — це сучасний онлайн-каталог аніме, що працює на базі AniLiberty API v1 (офіційне API AniLiberty). Наша система забезпечує пошук аніме в режимі реального часу, надаючи користувачам доступ до величезної бази даних: жанри аніме, рейтинги, дати виходу та студії виробництва, а також детальну інформацію про аніме, персонажів аніме, акторів озвучки персонажів. Завдяки повній інтеграції з API, інформація про топ аніме, популярні серіали, новинки та інша завжди залишається актуальною для наших відвідувачів.</title>
   <meta name="description" content="AniMe — це сучасний онлайн-каталог аніме, що працює на базі Aniliberty API v1 (офіційне API AniLibria). Наша система забезпечує пошук аніме в режимі реального часу, надаючи користувачам доступ до величезної бази даних: жанри аніме, рейтинги, дати виходу та студії виробництва, а також детальну інформацію про аніме, персонажів аніме, акторів озвучки персонажів. Завдяки повній інтеграції з API, інформація про топ аніме, популярні серіали, новинки та інша завжди залишається актуальною для наших відвідувачів.">
-  <link rel="icon" href="img/logo.svg" type="image/svg+xml">
+  <link rel="icon" href="img/my-logo/logo.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.json">
   
   <link rel="preconnect" href="https://fonts.googleapis.com" media="print" onload="this.media='all'">
@@ -35,15 +35,13 @@
   
 </head>
 <body>
-
 <header class="main-banner">
   <div class="logo">
     <h1>AniMe</h1>
   </div>
-
-  <!--<div class="search-wrap">-->
-    <input type="text" id="searchInput" placeholder="&#8981; Пошук аніме..." autocomplete="off" />
- <!-- </div>-->
+  
+  <input class="search-input" aria-label="Пошук аніме" type="text" id="search-input" placeholder="&#8981; Пошук аніме..." autocomplete="off" />
+  
 
   <nav class="nav-panel">
     <div class="nav-panel__panel panel-1">
@@ -81,7 +79,6 @@
 
 <!--root-->
 <div class="root">
-<main class="main">
   <!--menu navigation-->
   <nav class="menu" id="menu">
     <button class="menu__btn theme" id="theme-btn">Тема: <span class="light">Світла</span> / <span class="dark">Темна</span></button>
@@ -177,85 +174,13 @@
   </nav>
   
   
-  <!--render anime list-->
-  <div class="page main-page" id="main-page">
-    <div class="error-msg" id="errorBox" style="display:none;"></div>
-    <h2 class="section-title" id="sectionTitle"><em>Головна</em> сторінка</h2>
-    
-    <div class="loader" id="loader">
-      <div class="spinner"></div>
-      Завантаження...
-    </div>
-    
-    <div class="pagin" id="pagin">
-      <!--content adds js-->
-    </div>
+  <div class="error-wrap" id="error-wrap">
+    <!--content add js-->
   </div>
   
   
-  <!--anime viewing -->
-  <div class="page anime-viewing" id="anime-viewing">
-    
-    <div class="anime-view__header">
-      <div class="anime-view__poster">
-        <img class="anime-view__poster-img" id="anime-poster-img" src="" alt="" />
-      </div>
-      <div class="anime-view__info">
-        <div class="info__title" id="title"></div>
-        <div class="info__title-en" id="title-en"></div>
-        <div class="info__badges" id="badges"></div>
-        <div class="anime-view__genres-panel" id="genres-panel">
-          
-        </div>
-        <div class="info__desc" id="description"></div>
-      </div>
-    </div>
-    
-    <div class="anime-view__body">
-      
-      <div class="wrap player-section">
-        <h3 class="player-label">Плеєр</h3>
-        <div class="video-container">
-          <video class="video-player" id="video-player" ></video>
-        </div>
-      </div>
-      
-      <div class="wrap">
-        <h3 class="player-label">Епізоди</h3>
-        <div class="grid episodes-grid" id="episodesGrid">
-          <!--content adds js-->
-        </div>
-      </div>
-      
-      
-      <!--anime franchises-->
-      <div class="wrap">
-        <h3 class="player-label">Всі франшизи</h3>
-        <div class="grid anime-grid" id="franchises-grid">
-          <!--content adds js-->
-        </div>
-      </div>
-      
-      
-      <!--anime similar-->
-      <div class="wrap">
-        <h3 class="player-label">Аніме похожі за жанрами</h3>
-        <div class="grid anime-grid" id="similar-grid">
-          <!--content adds js-->
-        </div>
-      </div>
-      
-      
-      <!--anime members (actors)-->
-      <div class="wrap">
-        <h3 class="player-label">Актори/актриси цього аніме (нажаль, в більшості відсутня автарка...)</h3>
-        <div class="grid anime-grid" id="members-grid">
-          <!--content adds js-->
-        </div>
-      </div>
-      
-    </div>
-  </div>
+<main class="main" id="tag-main">
+  <!--content add js-->
 </main>
 
 
@@ -332,15 +257,101 @@
   </address>
   <div class="copy-wrap">
     <img class="logo" src="img/my-logo/logo.svg" alt="Моє лого">
-    <span>&copy; AniMe 2026 | v1.1.0-alpha.1 (DOM).</span>
+    <span>&copy; AniMe 2026 | v1.1.0 (DOM).</span>
   </div>
 </footer>
 
 </div>
 
 
+<!--templates-->
+<!--main page-->
+<template class="templates-pages" data-page="main-page">
+  <section class="page main-page">
+    <h2 class="section-title" id="section-title"><em>Головна</em> сторінка</h2>
+    
+    <div class="loader" id="loader">
+      <div class="loading-spinner-wrap">
+        <span>Завантаження...</span>
+        <div class="spinner"></div>
+      </div>
+      <!--content add js-->
+    </div>
+    
+    <nav class="pagin" id="pagin">
+      <!--content adds js-->
+    </nav>
+  </section>
+</template>
+
+
+<!--anime viewing -->
+<template class="templates-pages" data-page="anime-view">
+  <section class="page anime-view">
+    
+    <div class="anime-view__header">
+      <img class="anime-poster-img" id="anime-view-anime-poster" src="" alt="" />
+      <div class="anime-view__info">
+        <h2 class="info__title" id="anime-view-title"></h2>
+        <h3 class="info__title-en" id="anime-view-title-en"></h3>
+        <div class="info__wrap" id="anime-view-info-wrap"></div>
+        <div class="anime-view__genres-panel" id="anime-view-genres-panel">
+          <!--content add js-->
+        </div>
+        <div class="info__desc" id="anime-view-description"></div>
+      </div>
+    </div>
+    
+    <div class="anime-view__body">
+      
+      <section class="wrap">
+        <h3 class="player-label">Плеєр</h3>
+        <div class="video-container">
+          <video class="video-player" id="video-player" ></video>
+        </div>
+      </section>
+      
+      <section class="wrap">
+        <h3 class="player-label">Епізоди</h3>
+        <nav class="grid episodes-grid" id="episodes-grid">
+          <!--content adds js-->
+        </nav>
+      </section>
+    </div>
+    
+    
+    <!--anime franchises-->
+    <section class="wrap">
+      <h3 class="player-label">Всі франшизи</h3>
+      <div class="grid anime-grid" id="franchises-grid">
+        <!--content adds js-->
+      </div>
+    </section>
+    
+    
+    <!--anime similar-->
+    <section class="wrap">
+      <h3 class="player-label">Аніме похожі за жанрами</h3>
+      <div class="grid anime-grid" id="similar-grid">
+        <!--content adds js-->
+      </div>
+    </section>
+    
+    
+    <!--anime members (actors)-->
+    <section class="wrap">
+      <h3 class="player-label">Актори/актриси цього аніме (нажаль, в більшості відсутня автарка...)</h3>
+      <div class="grid anime-grid" id="members-grid">
+        <!--content adds js-->
+      </div>
+    </section>
+  </section>
+</template>
+
+
 <!--logic-->
-<script type="module" src="js/logic/mainLogic.js"></script>
+<script src="error.js"></script>
+<script type="module" src="js/logic/main-logic.js"></script>
 
 </body>
 </html>

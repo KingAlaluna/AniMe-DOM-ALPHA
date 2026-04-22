@@ -1,6 +1,6 @@
 import {html, data} from '../data/config.js';
-import {router} from './mainLogic.js';
-import {loadTab, anineFilter} from './filterAnime.js';
+import {router} from './main-logic.js';
+import {loadTab, anineFilter} from './filter-anime.js';
 
 
 //main menu
@@ -40,7 +40,6 @@ function btnActive(e) {
   
   if (dataFilter && data.currentTab != dataFilter && dataType) {
     router.navigate(`/filters/${dataType}/${dataFilter}`);
-    console.log('Клік на кнопку фільтру!', e.textContent);
   }
   
   if (dataList) {

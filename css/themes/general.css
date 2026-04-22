@@ -1,31 +1,19 @@
 :root {
-  --bg: #0a0a0f;
-  --surface: #111118;
-  --card: #16161f;
-  --border: 1px solid #ffffff0f;
-  --accent: #e84cff;
-  --accent2: #7c3aff;
-  --text: #f0eeff;
-  --muted: #8880aa;
-  --glow: #e84cff33;
+  /*palette colors*/
+  --white-50: hsla(200, 10%, 95%, 1);
+  --black-a50: hsla(0, 100%, 0%, 0.5);
+  --white-a50: hsla(0, 100%, 100%, 0.5);
+  --white-50: hsla(240, 19%, 95%, 1);
+  --black-950: hsla(240, 19%, 5%, 1);
+  --white-100: hsla(240, 17%, 92%, 1);
+  --black-900: hsla(240, 17%, 8%, 1);
+  --white-150: hsla(240, 17%, 90%, 1);
+  --black-850: hsla(240, 17%, 10%, 1);
   
-  --color-1: hsla(0, 100%, 0%, 0.5);
   
-  --brightness: 90%;
+  --card-active-botder-color: hsla(288, 100%, 65%, 0.27);
+  --text-accent-botder-color: hsla(288, 100%, 65%, 0.27);
+  
 }
 
 
-:root {
-  --btn-bg: var(--gray-50);
-  --anime-info-span-bg: var(--gray-50);
-  --footer-copy-bg: var(--gray-50);
-  --search-wrap-bg: var(--gray-50);
-  --wrap-scroll-progress-bg: var(--gray-50);
-  --anime-wrap-bg: var(--gray-50);
-  --anime-description-bg: var(--gray-50);
-  --anime-info-wrap-bg: var(--gray-50);
-  
-  --btn-box-shadow: var(--gray-250);
-  --scroll-progress-box-shadow: var(--gray-250);
-  
-}

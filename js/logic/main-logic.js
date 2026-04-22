@@ -1,60 +1,74 @@
 //lib
 import * as NavigoLib from 'https://esm.sh/navigo';
 
-//critical
-import {html, api, data} from '../data/config.js';
+//import elemetns
+import {html, api, data, i} from '../data/config.js';
 import {btnMapValue} from '../data/filter.js';
-import {openTitle, videoConfigStart} from './page/animeViewing.js';
-import {loadTab, anineFilter} from './filterAnime.js';
-import {searchAnime} from './searchAnime.js';
+import {openTitle, videoConfigStart} from './page/anime-view.js';
+import {loadTab, anineFilter} from './filter-anime.js';
+import {searchAnime} from './search-anime.js';
 
-//no critical
-import /*{btnActive} from*/ './menu.js';
-import './renderAnimeLists.js';
+//no elements import
+import './menu.js';
+import './render-anime-lists.js';
 import '../../sw-init.js';
 import './theme.js';
 
 
-// --- NAV ---
-function switchTab(tab, btn) {
-  data.currentTab = tab;
-  html.tabBtn.forEach(b => b.classList.remove('active'));
-  if (btn) btn.classList.add('active');
-  html.searchInput.value = '';
-  loadTab(tab);
+// add id pages
+function idMainPage() {
+  html.pagin = i('pagin');
+  html.loader = i('loader');
+  html.sectionTitle = i('section-title');
 }
 
+function idAnimeView() {
+  html.animeViewAnimePoster = i('anime-view-anime-poster');
+  html.animeViewTitle = i('anime-view-title');
+  html.animeViewInfoWrap = i('anime-view-info-wrap');
+  html.animeViewDescription = i('anime-view-description');
+  html.animeViewTitleEn = i('anime-view-title-en');
+  html.animeViewGenresPanel = i('anime-view-genres-panel');
+  html.episodesGrid = i('episodes-grid');
+  html.videoPlayer = i('video-player');
+  html.franchisesGrid = i('franchises-grid');
+  html.similarGrid = i('similar-grid');
+  html.membersGrid = i('members-grid');
+}
+
+const newIdPage = {
+  'main-page': idMainPage,
+  'anime-view': idAnimeView,
+};
 
 function pageActive(page) {
   if (data.page != page) {
     data.page = page;
+    if (page == 'main-page') {
+      data.descriptionActive = false;
+    }
     
     html.searchInput.value = '';
-    html.allPage.forEach(e => {
-      e.style.display = 'none';
-      //e.scrollTo(0, 0);
+    
+    html.templatesPages.forEach(e => {
+      const dataPage = e.dataset.page;
+      if (dataPage == page) {
+        const content = e.content.cloneNode(true);
+        html.tagMain.replaceChildren(content);
+        newIdPage[page]();
+      }
     });
-    html[page].style.display = 'flex';
   }
 }
 
 
-// --- FETCH HELPERS ---
+// api fetch helpes 
 export async function apiFetch(endpoint) {
   const res = await fetch(endpoint || api.API);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return res.json();
 }
 
-function showError(msg) {
-  html.errorBox.textContent = '⚠ ' + msg;
-  html.errorBox.style.display = 'block';
-  setTimeout(() => html.errorBox.style.display = 'none', 5000);
-}
-
-/*function setLoading() {
-  //html.mainPage.innerHTML = '<div class="loader" id="loader"><div class="spinner"></div> Завантаження...</div>';
-}*/
 
 
 // utils
@@ -67,9 +81,8 @@ async function scheduleNow(type) {
   if (Object.keys(data.scheduleNow).length == 0) {
     const result = await apiFetch(api.scheduleNow);
     data.scheduleNow = await result;
-    console.log('Теперішній розклад результат!!!', result);
   }
-  pageActive('mainPage');
+  pageActive('main-page');
   loadTab(type);
 }
 
@@ -113,7 +126,6 @@ function btnActive(match) {
 //
 //router
 //
-//console.log(window.Navigo);
 const root = window.location.pathname;
 export const router = new NavigoLib.default(root, { hash: true });
 
@@ -121,40 +133,39 @@ router.hooks({
   after: (match) => {
     videoConfigStart();
     btnActive(match);
-    console.log('after match', match);
   }
 });
 
 router.on({
   '/': () => {
-    pageActive('mainPage');
+    pageActive('main-page');
     loadTab('main');
   },
   
   '/search/:name': (match) => {
-    pageActive('mainPage');
+    pageActive('main-page');
     searchAnime(match.data.name);
   },
   
   '/animeView/:id': (match) => {
-    pageActive('animeViewing');
+    pageActive('anime-view');
     openTitle(match.data.id);
   },
   
   
   '/updates': () => {
-    pageActive('mainPage');
+    pageActive('main-page');
     loadTab('updates');
   },
   
   //жанри 
   '/genres-random': () => {
-    pageActive('mainPage');
+    pageActive('main-page');
     loadTab('genres-random');
   },
   
   '/genres-all': () => {
-    pageActive('mainPage');
+    pageActive('main-page');
     loadTab('genres-all');
   },
   
@@ -173,7 +184,7 @@ router.on({
   },
   
   '/scheduleWeek': () => {
-    pageActive('mainPage');
+    pageActive('main-page');
     loadTab('scheduleWeek');
   },
   
@@ -184,7 +195,7 @@ router.on({
     const value = match.data.value;
     const name = type != 'years' ? btnMapValue[type].get(isNaN(value) ? value : Number(value)) : null;
     
-    pageActive('mainPage');
+    pageActive('main-page');
     anineFilter(type, value, name);
   },
   

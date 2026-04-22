@@ -4,7 +4,7 @@
   width: 40px;
   height: 40px;
   border: var(--border);
-  background: var(--card);
+  background: var(--menu-btn-bg);
   position: relative;
   
   
@@ -82,7 +82,7 @@
     height: 40px;
     width: 100%;
     border: var(--border);
-    background: var(--card);
+    background: var(--menu-btn-bg);
     margin: 0.5rem 0;
     transition: 0.2s ease;
     
@@ -154,7 +154,7 @@ details > div {
   }
   
   .menu__btn.menu__btn {
-    background: var(--card-2);
+    background: transparent;
   }
 }
 

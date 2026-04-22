@@ -1,5 +1,5 @@
 .btn-number {
-  background: var(--card);
+  background: var(--btn-number-bg);
   border: var(--border);
   color: var(--text);
   font-family: 'Unbounded', sans-serif;

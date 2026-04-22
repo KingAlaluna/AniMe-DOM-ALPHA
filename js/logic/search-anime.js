@@ -1,7 +1,7 @@
 import {html, api, data} from '../data/config.js';
-import {escHtml, apiFetch, router} from './mainLogic.js';
-import {filters} from './filterAnime.js';
-import {renderGrid, paginBtn} from './renderAnimeLists.js';
+import {escHtml, apiFetch, router} from './main-logic.js';
+import {filters} from './filter-anime.js';
+import {renderGrid, paginBtn} from './render-anime-lists.js';
 
 
 let searchTimer;
@@ -38,7 +38,6 @@ export async function searchAnime(query) {
     api.active = `${api.catalog}?${new URLSearchParams(filters.config).toString()}`;
     const dataA = await apiFetch(api.active);
     
-    console.debug('Пошук результат', dataA);
     
     if (!dataA || dataA.length === 0) {
       html.loader.innerHTML = '<div class="empty"><div class="empty-icon">🔍</div><div class="empty-title">Нічого не знайдено </div><p>Попробуйте другий запит</p></div>';

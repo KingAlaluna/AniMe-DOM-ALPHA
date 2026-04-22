@@ -6,8 +6,6 @@
   flex-direction: initial;
   justify-content: initial;
   align-items: initial;
-  /*fill: var(--accent2);*/
-  /*stroke: var(--accent2);*/
   color: revert-layer;
   flex-shrink: initial;
   fill: #fff;
@@ -23,9 +21,4 @@
   height: auto;
   display: none;
   overflow: visible;
-  /*background-color: var(--accent2);*
-  fill: var(--accent2);*
-  stroke: var(--accent2);*/
-  /*color: #fff;*
-  fill: #fff;*/
 }

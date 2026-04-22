@@ -19,13 +19,13 @@ html, body, div {
 html {
   scroll-behavior: smooth;
   color-scheme: light dark;
+  background: var(--main-bg);
 }
 
 
 div {
   display: flex;
   flex-direction: column;
-  justify-content: normal;
   align-items: center;
   position: relative;
 }
@@ -48,27 +48,17 @@ input {
   
   &::placeholder {
     opacity: 1;
-    color: var(--color-1);
+    color: var(--input-placeholder-color);
   }
 }
 
 
 body {
-  background: var(--bg);
+  background: var(--main-bg-gradient);
   color: var(--text);
   font-family: 'Noto Sans', sans-serif;
   font-weight: 300;
   overflow-x: hidden;
-  
-  
-  &::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background: var(--main-bg-gradient);
-    pointer-events: none;
-    z-index: 0;
-  }
 }
 
 
@@ -105,8 +95,88 @@ body {
     grid-column: 3/5;
     text-align: center;
     
+    &.active {
+      &::placeholder {
+        color: hsla(0, 10%, 95%, 0.8);
+      }
+    }
+    
     &.error {
       background: #f00;
     }
+  }
+}
+
+
+
+.anime-info-text {
+  font-size: 0.65rem;
+  font-family: 'Unbounded', sans-serif;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.5;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  
+  &:not(.genre) {
+    border: var(--border);
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+  }
+  
+  &.accent {
+    border-color: var(--text-accent-botder-color);
+    color: var(--accent);
+  }
+}
+
+
+
+.error-wrap {
+  display: none;
+  background: #f00;
+  width: calc(100% - (var(--padding) * 2));
+  height: max-content;
+  min-height: 4rem;
+  max-height: calc(100% - 6rem);
+  padding: 1rem;
+  border-radius: var(--radius);
+  border: var(--border);
+  position: fixed;
+  top: 5rem;
+  left: var(--padding);
+  z-index: 1000;
+  overflow: auto;
+  
+  * {
+    color: #fff;
+  }
+  
+  &.active {
+    display: flex;
+  }
+}
+
+
+/* EMPTY */
+.empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--muted);
+  
+  .empty-icon { 
+    font-size: 3rem; 
+    margin-bottom: 1rem; 
+    opacity: 0.4; 
+  }
+  
+  .empty-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text);
   }
 }
