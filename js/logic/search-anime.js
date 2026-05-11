@@ -1,7 +1,8 @@
 import {html, api, data} from '../data/config.js';
 import {escHtml, apiFetch, router} from './main-logic.js';
 import {filters} from './filter-anime.js';
-import {renderGrid, paginBtn} from './render-anime-lists.js';
+import {renderGrid} from './render-anime-lists.js';
+import {paginBtn} from './paginations.js';
 
 
 let searchTimer;

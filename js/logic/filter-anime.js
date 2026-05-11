@@ -1,7 +1,9 @@
 import {html, api, data, c} from '../data/config.js';
 import {allFilter} from '../data/filter.js';
 import {apiFetch} from './main-logic.js';
-import {renderGrid, renderGenresGrid, paginBtn} from './render-anime-lists.js';
+import {renderGrid, renderGenresGrid} from './render-anime-lists.js';
+import {paginBtn} from './paginations.js';
+
 
 // --- Filters ---
 export const filters = {

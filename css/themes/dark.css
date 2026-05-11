@@ -28,6 +28,17 @@
   --input-search-bg: var(--black-850);
   --menu-btn-bg: var(--black-850);
   
+  
+  --project-type-bg: var(--black-850);
+  
+  --status-alpha-color: var(--red-600);
+  --status-alpha-bg: var(--black-850);
+  --status-alpha-border-color: var(--red-600);
+  
+  --status-beta-color: var(--yellow-600);
+  --status-beta-bg: var(--black-850);
+  --status-beta-border-color: var(--yellow-600);
+  
 }
 
 

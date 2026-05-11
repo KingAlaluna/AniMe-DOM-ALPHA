@@ -1,7 +1,6 @@
 //html element
 export const i = (id) => document.getElementById(id);
 export const c = (classis) => document.querySelectorAll(`.${classis}`);
-const ac = (autoClassis) => document.getElementsByClassName(autoClassis);
 
 
 export const html = {
@@ -67,7 +66,10 @@ export const html = {
 //api data
 export const api = {
   API: 'https://aniliberty.top/api/v1/anime/releases/latest',
-  imgApi: 'https://static-libria.weekstorm.us',
+  //imgApi: 'https://static-libria.weekstorm.us',
+  imgApi: 'https://www.anilibria.tv',
+  
+  
   episodeApi: 'https://aniliberty.top/api/v1/anime/releases/episodes/',
   
   
@@ -110,4 +112,33 @@ export const data = {
 };
 
 
+//anime general data
+export const animeData = {
+  franchises: {
+    grid: 'franchisesGrid',
+    img: 'animeFranchisesImg',
+    imgClass: 'anime-franchises__poster',
+    text: 'На жаль, в даного аніме франшизи відсутні...',
+  },
+  similar: {
+    grid: 'similarGrid',
+    img: 'animeSimilarImg',
+    imgClass: 'anime-similar__poster',
+    text: 'На жаль, аніме, схожі за жанрами, відсутні...',
+  },
+  animeCard: {
+    grid: 'loader',
+    img: 'animeCardImg',
+    imgClass: 'anime-card__poster',
+  },
+  
+  genre: {
+    img: 'genreImg',
+    imgClass: 'genre__img',
+  },
+  member: {
+    img: 'animeMemberImg',
+    imgClass: 'anime-member__img',
+  }
+};
 

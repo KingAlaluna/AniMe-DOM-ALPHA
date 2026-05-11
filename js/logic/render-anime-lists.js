@@ -1,11 +1,8 @@
-import {html, api, c, vData} from '../data/config.js';
+import {html, api, c, vData, animeData} from '../data/config.js';
 import {escHtml, router, apiFetch} from './main-logic.js';
 import {filters} from './filter-anime.js';
 import {videoConfigStart} from './page/anime-view.js';
-
-export const paginBtn = {
-  status: false,
-};
+import {paginCheck} from './paginations.js';
 
 
 //рендер звичайних аніме
@@ -16,176 +13,19 @@ export async function renderGrid(list) {
   }
   videoConfigStart();
   
+  const animeArray = list.data ? list.data : list;
   
   const grid = document.createElement('div');
   grid.className = 'anime-grid';
   
-  const animeArray = list.data ? list.data : list;
-  
-  animeArray.forEach((anime, idx) => {
-    const a = anime.release ? anime.release : anime;
-    
-    const card = document.createElement('div');
-    card.className = 'anime-card';
-    card.style.animationDelay = `${idx * 0.03}s`;
-    
-    card.onclick = () => {
-      router.navigate(`/animeView/${a.id}`);
-    };
-    
-    
-    const poster = `${api.imgApi + a.poster.optimized.thumbnail}`;
-    const name = a.name.main;
-    const year = a.year;
-    const rating = a.age_rating.label;
-    const type = a.type.description;
-    const eps = a.episodes_total ? a.episodes_total : a.latest_episode?.ordinal;
-    const genres = a.genres?.map(e => e.name).join(', ');
-    
-    card.innerHTML = `
-      <img class="anime-card__poster img-blur" ${idx < 6 ? 'fetchpriority="high"' : ''} ${idx > 5 ? 'loading="lazy"' : ''} src="${poster}" alt="${escHtml(name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="anime-card__poster-placeholder" style="display:${poster ? 'none' : 'flex'}">🎌</div>
-      <div class="anime-card__body">
-        <div class="anime-card__title">${escHtml(name)}</div>
-        <div class="anime-card__meta">
-          ${year ? `<span class="anime-info-text">${year}</span>` : ''}
-          ${rating ? `<span class="anime-info-text accent">${rating}</span>` : ''}
-          ${type ? `<span class="anime-info-text accent">${type}</span>` : ''}
-          ${eps ? `<span class="anime-info-text accent">${eps} еп.</span>` : ''}
-          ${genres ? `<span class="anime-info-text accent">${genres}</span>` : ''}
-          
-        </div>
-      </div>
-    `;
-    
-    grid.appendChild(card);
-  });
-  
   html.loader.innerHTML = '';
   html.loader.appendChild(grid);
   
-  html.animeCardImg = c('anime-card__poster');
-  
-  html.animeCardImg.forEach((e, idx) => {
-    e.onload = () => {
-      const poster = `${api.imgApi + (animeArray[idx].release ? animeArray[idx].release.poster.optimized.src : animeArray[idx].poster.optimized.src)}`;
-      const imgLoader = new Image();
-      imgLoader.src = poster;
-      imgLoader.onload = () => {
-        e.src = poster;
-        e.classList.remove('img-blur');
-      };
-    };
-  });
-  
+  renderAnimeGrid(animeArray, 'animeCard', grid);
   
   //pagination
   paginCheck(list);
 }
-
-
-
-//
-//pagination
-//
-//template
-class PaginBtn {
-  constructor(page) {
-    this.btn = `<button class="btn-number pagin-btn ${page == 1 ? 'active' : ''}" aria-label="Пагінація, сторінка ${page}" data-page="${page}">${page}</button>`;
-  }
-}
-
-
-//logic 
-function paginBtnRender(pagesTotal, pagesTotalStatus) {
-  paginBtn.status = true;
-  
-  let btnPaginLeft = '';
-  let btnPaginRight = '';
-  let btn = 0;
-  let btnMax = Math.ceil((pagesTotal / 2) > 8 ? 8 : pagesTotal / 2);
-  
-  while (btn < pagesTotal / 2 && btn < 8) {
-    btnPaginLeft += new PaginBtn(btn + 1).btn;
-    if (pagesTotal <= 15) {
-      if (pagesTotal % 2 != 0) {
-        btnPaginRight += btnMax < Math.ceil(pagesTotal / 2) ? new PaginBtn(pagesTotal - (btnMax - 1)).btn : '';
-      } else {
-        btnPaginRight += new PaginBtn(pagesTotal - (btnMax - 1)).btn;
-      }
-    } else {
-      btnPaginRight += new PaginBtn(pagesTotal - (btnMax - 1)).btn;
-    }
-    
-    btn += 1;
-    btnMax -= 1;
-  }
-  
-  
-  html.pagin.innerHTML = `
-    ${btnPaginLeft}
-    ${(pagesTotal / 2) > 8 ? '<input class="btn-number pagin-btn" aria-label="Пагінація, введіть сторінку" type="number" placeholder="Сторінка" />' : ''}
-    ${btnPaginRight}
-  `;
-  
-  if (!pagesTotalStatus) {
-    return;
-  }
-  
-  //click
-  html.paginBtn = c('pagin-btn');
-  
-  html.paginBtn.forEach(e => {
-    ['click', 'keydown'].forEach(ev => {
-      e.addEventListener(ev, async (en) => {
-        if (ev == 'click') {
-          html.paginBtn.forEach(e => {
-            e.classList.remove('active');
-          });
-          e.classList.add('active');
-          
-          const page = e.dataset.page;
-          if (page) {
-            filters.config.page = page;
-            api.active = `${api.catalog}?${new URLSearchParams(filters.config).toString()}`;
-            const newAnimes = await apiFetch(`${api.active}`);
-            renderGrid(newAnimes);
-          }
-        }
-        if (ev == 'keydown' && en.key == 'Enter') {
-          const page = e.dataset.page;
-          if (!page) {
-            if (e.value > 0 && e.value <= pagesTotal) {
-              filters.config.page = e.value;
-              api.active = `${api.catalog}?${new URLSearchParams(filters.config).toString()}`;
-              const newAnimes = await apiFetch(`${api.active}`);
-              renderGrid(newAnimes);
-            } else {
-              e.value = '';
-              e.placeholder = 'Помилка!';
-              e.classList.add('error');
-              setTimeout(() => {
-                e.placeholder = 'Сторінка';
-                e.classList.remove('error');
-              }, 1000);
-            }
-          }
-        }
-      });
-    });
-  });
-}
-
-
-function paginCheck(list) {
-  if (!paginBtn.status) {
-    const pagesStatus = list?.meta?.pagination?.total_pages;
-    const checkPagesTotal = pagesStatus ? pagesStatus : 1;
-    const pagesTotal = Number(checkPagesTotal);
-    paginBtnRender(pagesTotal, pagesStatus ? true : false);
-  }
-}
-
 
 
 //рендер жанрів
@@ -223,11 +63,23 @@ export async function renderGenresGrid(list) {
   html.loader.innerHTML = '';
   html.loader.appendChild(grid);
   
-  html.animeCardImg = c('anime-card__poster');
+  imgUpdate('animeCard', (idx) => list[idx].image.optimized.preview);
   
-  html.animeCardImg.forEach((e, idx) => {
+  //pagination
+  paginCheck(list);
+}
+
+
+//img update
+export function imgUpdate(type, getImgUrl) {
+  html[animeData[type].img] = c(animeData[type].imgClass);
+  
+  html[animeData[type].img].forEach((e, idx) => {
     e.onload = () => {
-      const poster = `${api.imgApi + list[idx].image.optimized.preview}`;
+      const imgUrl = getImgUrl(idx);
+      if (!imgUrl) return;
+      
+      const poster = `${api.imgApi + imgUrl}`;
       const imgLoader = new Image();
       imgLoader.src = poster;
       imgLoader.onload = () => {
@@ -236,9 +88,70 @@ export async function renderGenresGrid(list) {
       };
     };
   });
+}
+
+
+//render list anime
+export async function renderAnimeGrid(list, dataType, wrapAdd) {
+  if (!list || list.data ? list.data.length === 0 : list.length === 0) {
+    html.loader.innerHTML = '<div class="empty"><div class="empty-icon">🎬</div><div class="empty-title">Пусто</div></div>';
+    return;
+  }
   
+  const animeArray = list.data ? list.data : list;
   
-  //pagination
-  paginCheck(list);
+  animeArray.forEach((anime, idx) => {
+    const a = anime.release ? anime.release : anime;
+    
+    const card = document.createElement('div');
+    card.className = 'anime-card';
+    card.style.animationDelay = `${idx * 0.03}s`;
+    
+    card.onclick = () => {
+      router.navigate(`/animeView/${a.id}`);
+    };
+    
+    
+    const poster = `${api.imgApi + a.poster.optimized.thumbnail}`;
+    const name = a.name.main;
+    const year = a.year;
+    const rating = a.age_rating.label;
+    const type = a.type.description;
+    const eps = a.episodes_total ? a.episodes_total : a.latest_episode?.ordinal;
+    const genres = a.genres?.map(e => e.name).join(', ');
+    
+    card.innerHTML = `
+      <img class="${animeData[dataType].imgClass} img-blur" ${idx < 6 ? 'fetchpriority="high"' : ''} ${idx > 5 ? 'loading="lazy"' : ''} src="${poster}" alt="${escHtml(name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="anime-card__poster-placeholder" style="display:${poster ? 'none' : 'flex'}">🎌</div>
+      <div class="anime-card__body">
+        <div class="anime-card__title">${escHtml(name)}</div>
+        <div class="anime-card__meta">
+          ${year ? `<span class="anime-info-text">${year}</span>` : ''}
+          ${rating ? `<span class="anime-info-text accent">${rating}</span>` : ''}
+          ${type ? `<span class="anime-info-text accent">${type}</span>` : ''}
+          ${eps ? `<span class="anime-info-text accent">${eps} еп.</span>` : ''}
+          ${genres ? `<span class="anime-info-text accent">${genres}</span>` : ''}
+          
+        </div>
+      </div>
+    `;
+    
+    wrapAdd ? wrapAdd.appendChild(card) : html[animeData[dataType].grid].appendChild(card);
+  });
+  
+  imgUpdate(dataType, (idx) => (animeArray[idx].release ? animeArray[idx].release.poster.optimized.src : animeArray[idx].poster.optimized.src));
+}
+
+
+//start render anime
+export function renderAnime(check, type, animes) {
+  html[animeData[type].grid].innerHTML = '';
+  if (check) {
+    html[animeData[type].grid].classList.remove('no-grid');
+    renderAnimeGrid(animes, type);
+  } else {
+    html[animeData[type].grid].classList.add('no-grid');
+    html[animeData[type].grid].innerHTML = `<strong>${[animeData[type].text]}</strong>`;
+  }
 }
 

@@ -1,8 +1,9 @@
 import Hls from 'https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.mjs';
 import Plyr from 'https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.mjs';
 
-import {html, api, vData, data, c} from '../../data/config.js';
+import {html, api, vData, data, c, animeData} from '../../data/config.js';
 import {apiFetch, escHtml, router} from '../main-logic.js';
+import {imgUpdate, renderAnimeGrid, renderAnime} from '../render-anime-lists.js';
 
 
 export function videoConfigStart() {
@@ -78,20 +79,7 @@ export async function openTitle(animeId) {
     
     html.animeViewDescription.textContent = a.description || '';
     
-    
-    html.genreImg = c('genre__img');
-    
-    html.genreImg.forEach((e, idx) => {
-      e.onload = () => {
-        const poster = `${api.imgApi + a.genres[idx].image.optimized.preview}`;
-        const imgLoader = new Image();
-        imgLoader.src = poster;
-        imgLoader.onload = () => {
-          e.src = poster;
-          e.classList.remove('img-blur');
-        };
-      };
-    });
+    imgUpdate('genre', (idx) => a.genres[idx].image.optimized.preview);
     
     animeFranchises(animeId);
     const totalGenresName = a.genres.map(e => e.id).join(',');
@@ -181,7 +169,6 @@ function videoEpisode(url) {
 }
 
 
-
 //
 //anime franchises grid
 //
@@ -190,84 +177,11 @@ async function animeFranchises(animeId) {
     const animes = await apiFetch(api.franchises + animeId);
     const releases = await animes[0]?.franchise_releases;
     
-    html.franchisesGrid.innerHTML = '';
-    if (releases) {
-      html.franchisesGrid.classList.remove('no-grid');
-      renderFranchisesGrid(releases);
-    } else {
-      html.franchisesGrid.classList.add('no-grid');
-      html.franchisesGrid.innerHTML = '<strong>Нажаль, в даного аніме франшизи відсутні...</strong>';
-    }
+    renderAnime(releases, 'franchises', releases);
   } catch (e) {
     console.error('Помилка завантаження франшиз', e.message);
   }
 }
-
-
-//render franchises anime
-async function renderFranchisesGrid(list) {
-  if (!list || list.data ? list.data.length === 0 : list.length === 0) {
-    html.loader.innerHTML = '<div class="empty"><div class="empty-icon">🎬</div><div class="empty-title">Пусто</div></div>';
-    return;
-  }
-  
-  const animeArray = list.data ? list.data : list;
-  
-  animeArray.forEach((anime, idx) => {
-    const a = anime.release ? anime.release : anime;
-    
-    const card = document.createElement('div');
-    card.className = 'anime-card';
-    card.style.animationDelay = `${idx * 0.03}s`;
-    
-    card.onclick = () => {
-      router.navigate(`/animeView/${a.id}`);
-    };
-    
-    
-    const poster = `${api.imgApi + a.poster.optimized.thumbnail}`;
-    const name = a.name.main;
-    const year = a.year;
-    const rating = a.age_rating.label;
-    const type = a.type.description;
-    const eps = a.episodes_total ? a.episodes_total : a.latest_episode?.ordinal;
-    const genres = a.genres?.map(e => e.name).join(', ');
-    
-    card.innerHTML = `
-      <img class="anime-franchises__poster img-blur" ${idx < 6 ? 'fetchpriority="high"' : ''} ${idx > 5 ? 'loading="lazy"' : ''} src="${poster}" alt="${escHtml(name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="anime-card__poster-placeholder" style="display:${poster ? 'none' : 'flex'}">🎌</div>
-      <div class="anime-card__body">
-        <div class="anime-card__title">${escHtml(name)}</div>
-        <div class="anime-card__meta">
-          ${year ? `<span class="anime-info-text">${year}</span>` : ''}
-          ${rating ? `<span class="anime-info-text accent">${rating}</span>` : ''}
-          ${type ? `<span class="anime-info-text accent">${type}</span>` : ''}
-          ${eps ? `<span class="anime-info-text accent">${eps} еп.</span>` : ''}
-          ${genres ? `<span class="anime-info-text accent">${genres}</span>` : ''}
-          
-        </div>
-      </div>
-    `;
-    
-    html.franchisesGrid.appendChild(card);
-  });
-  
-  
-  html.animeFranchisesImg = c('anime-franchises__poster');
-  
-  html.animeFranchisesImg.forEach((e, idx) => {
-    e.onload = () => {
-      const poster = `${api.imgApi + (animeArray[idx].release ? animeArray[idx].release.poster.optimized.src : animeArray[idx].poster.optimized.src)}`;
-      const imgLoader = new Image();
-      imgLoader.src = poster;
-      imgLoader.onload = () => {
-        e.src = poster;
-        e.classList.remove('img-blur');
-      };
-    };
-  });
-}
-
 
 
 //
@@ -277,85 +191,11 @@ async function similarAnime(genres) {
   try {
     const animes = await apiFetch(`${api.activeSimilar}?f[genres]=${genres}`);
     
-    html.similarGrid.innerHTML = '';
-    if (animes.data.length > 0) {
-      html.similarGrid.classList.remove('no-grid');
-      renderSimilarGrid(animes);
-    } else {
-      html.similarGrid.classList.add('no-grid');
-      html.similarGrid.innerHTML = '<strong>Нажаль, аніме похожі за жанрами відсутні...</strong>';
-    }
+    renderAnime(animes.data.length > 0, 'similar', animes);
   } catch (e) {
     console.error('Помилка similarAnime', e.message);
   }
 }
-
-
-
-//render similar anime
-async function renderSimilarGrid(list) {
-  if (!list || list.data ? list.data.length === 0 : list.length === 0) {
-    html.loader.innerHTML = '<div class="empty"><div class="empty-icon">🎬</div><div class="empty-title">Пусто</div></div>';
-    return;
-  }
-  
-  const animeArray = list.data ? list.data : list;
-  
-  animeArray.forEach((anime, idx) => {
-    const a = anime.release ? anime.release : anime;
-    
-    const card = document.createElement('div');
-    card.className = 'anime-card';
-    card.style.animationDelay = `${idx * 0.03}s`;
-    
-    card.onclick = () => {
-      router.navigate(`/animeView/${a.id}`);
-    };
-    
-    
-    const poster = `${api.imgApi + a.poster.optimized.thumbnail}`;
-    const name = a.name.main;
-    const year = a.year;
-    const rating = a.age_rating.label;
-    const type = a.type.description;
-    const eps = a.episodes_total ? a.episodes_total : a.latest_episode?.ordinal;
-    const genres = a.genres?.map(e => e.name).join(', ');
-    
-    card.innerHTML = `
-      <img class="anime-similar__poster img-blur" ${idx < 6 ? 'fetchpriority="high"' : ''} ${idx > 5 ? 'loading="lazy"' : ''} src="${poster}" alt="${escHtml(name)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-      <div class="anime-card__poster-placeholder" style="display:${poster ? 'none' : 'flex'}">🎌</div>
-      <div class="anime-card__body">
-        <div class="anime-card__title">${escHtml(name)}</div>
-        <div class="anime-card__meta">
-          ${year ? `<span class="anime-info-text">${year}</span>` : ''}
-          ${rating ? `<span class="anime-info-text accent">${rating}</span>` : ''}
-          ${type ? `<span class="anime-info-text accent">${type}</span>` : ''}
-          ${eps ? `<span class="anime-info-text accent">${eps} еп.</span>` : ''}
-          ${genres ? `<span class="anime-info-text accent">${genres}</span>` : ''}
-          
-        </div>
-      </div>
-    `;
-    
-    html.similarGrid.appendChild(card);
-  });
-  
-  
-  html.animeSimilarImg = c('anime-similar__poster');
-  
-  html.animeSimilarImg.forEach((e, idx) => {
-    e.onload = () => {
-      const poster = `${api.imgApi + (animeArray[idx].release ? animeArray[idx].release.poster.optimized.src : animeArray[idx].poster.optimized.src)}`;
-      const imgLoader = new Image();
-      imgLoader.src = poster;
-      imgLoader.onload = () => {
-        e.src = poster;
-        e.classList.remove('img-blur');
-      };
-    };
-  });
-}
-
 
 
 //
@@ -407,24 +247,7 @@ async function renderMembersGrid(list) {
     html.membersGrid.appendChild(card);
   });
   
-  
-  html.animeMemberImg = c('anime-member__img');
-  
-  html.animeMemberImg.forEach((e, idx) => {
-    e.onload = () => {
-      const avatar = list[idx].user?.avatar?.optimized?.preview;
-      
-      if (avatar) {
-        const img = `${api.imgApi + avatar}`;
-        const imgLoader = new Image();
-        imgLoader.src = img;
-        imgLoader.onload = () => {
-          e.src = img;
-          e.classList.remove('img-blur');
-        };
-      }
-    };
-  });
+  imgUpdate('member', (idx) => list[idx].user?.avatar?.optimized?.preview);
 }
 
 
@@ -441,3 +264,4 @@ function noImgColor(name) {
   
   return `hsla(${hue}, 100%, var(--brightness), 1)`;
 }
+

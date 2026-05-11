@@ -13,6 +13,7 @@ import './menu.js';
 import './render-anime-lists.js';
 import '../../sw-init.js';
 import './theme.js';
+import './footer-copy.js';
 
 
 // add id pages

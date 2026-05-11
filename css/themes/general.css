@@ -9,7 +9,10 @@
   --black-900: hsla(240, 17%, 8%, 1);
   --white-150: hsla(240, 17%, 90%, 1);
   --black-850: hsla(240, 17%, 10%, 1);
-  
+  --red-400: hsla(0, 100%, 40%, 1);
+  --red-600: hsla(0, 100%, 60%, 1);
+  --yellow-300: hsla(50, 100%, 30%, 1);
+  --yellow-600: hsla(60, 100%, 60%, 1);
   
   --card-active-botder-color: hsla(288, 100%, 65%, 0.27);
   --text-accent-botder-color: hsla(288, 100%, 65%, 0.27);
